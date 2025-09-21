@@ -61,6 +61,11 @@ typedef struct AOEFFSymEnt {
 #define SE_ABSV_T 1
 #define SE_FUNC_T 2
 #define SE_OBJ_T 3
+// Extra object types, not necessary
+#define SE_OBJ_ARR_T 4
+#define SE_OBJ_STRUCT_T 5
+#define SE_OBJ_UNION_T 6
+#define SE_OBJ_PTR_T 7
 
 #define SE_LOCAL 0
 #define SE_GLOBL 1
