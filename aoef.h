@@ -44,7 +44,7 @@ typedef struct AOEFFSctHdr {
 
 
 typedef struct AOEFFSymEnt {
-	uint32_t seSymbName; // index of the symbol name
+	uint32_t seSymbName; // index of the symbol name in the string table
 	uint32_t seSymbSize; // size of the data that the symbol is referring to
 	uint32_t seSymbVal; // value of the symbol
 	uint8_t seSymbInfo; // symbol information ([symbol type, symbol locality])
@@ -71,26 +71,29 @@ typedef struct AOEFFSymEnt {
 #define SE_GLOBL 1
 
 
-typedef struct AOEFFStrTab {
+typedef struct AOEFFStringTable {
 	char* stStrs;
-} AOEFFStringTab;
+} AOEFFStrTab;
 
+typedef struct AOEFFRelStringTable {
+	char* rstStrs;
+} AOEFFRelStrTab;
 
-typedef struct AOEFFRelEnt {
+typedef struct AOEFFRelEntry {
 	uint32_t reOff; // offset from the start of the section
 	uint32_t reSymb; // index of the symbol in symbol table
 	uint8_t reType; // type of relocation (RE_ARU32_*)
-} AOEFFRelEntry;
+} AOEFFRelEnt;
 
-typedef struct AOEFFRelTab {
+typedef struct AOEFFRelTable {
 	uint8_t relSect; // which section this relocation table is for
 	uint32_t relTabName; // index of relocation table name
-	AOEFFRelEntry** relEntries;
+	AOEFFRelEnt** relEntries;
 	uint32_t relCount; // number of relocation entries
-} AOEFFRelTable;
+} AOEFFRelTab;
 
-typedef struct AOEFFRelTabDir {
-	AOEFFRelTable* reldTables;
+typedef struct AOEFFRelTableDirectory {
+	AOEFFRelTab* reldTables;
 	uint8_t reldCount; // number of relocation tables
 } AOEFFRelTableDir;
 
@@ -99,6 +102,29 @@ typedef struct AOEFFRelTabDir {
 #define RE_ARU32_IR24 2
 #define RE_ARU32_IR19 3
 
+typedef struct AOEFFDynamicLibEntry {
+	uint32_t dlName; // index of the dynamic library name in dynamic string table
+	uint32_t dlVersion; // version of the dynamic library
+} AOEFFDyLibEnt;
+
+typedef struct AOEFFDynamicLibTable {
+	AOEFFDyLibEnt* dlEntries;
+	uint32_t dlCount; // number of dynamic library entries
+} AOEFFDyLibTab;
+
+typedef struct AOEFFDynamicStringTable {
+	char* dlstStrs;
+} AOEFFDyStrTab;
+
+typedef struct AOEFFImportEntry {
+	uint32_t ieName; // index of the imported symbol name in the string table
+	uint32_t ieDyLib; // index of the dynamic library this symbol is imported from in the dynamic library table
+} AOEFFImportEnt;
+
+typedef struct AOEFFImportTable {
+	AOEFFImportEnt* imEntries;
+	uint32_t imCount; // number of import entries
+} AOEFFImportTab;
 
 typedef enum AOEF_BIN_FILETYPE {
 	AOEF_FT_AOBJ,
@@ -113,14 +139,19 @@ typedef struct AOEF_BIN {
 	AOEFFheader header;
 	AOEFFSectHeader* sectHdrTable;
 	AOEFFSymbEntry* symbEntTable;
-	AOEFFStringTab stringTable;
+	AOEFFStrTab symbStringTable;
 	AOEFFRelTableDir reltabDir;
+	AOEFFDyLibTab dyLibTable;
+	AOEFFDyStrTab dyLibStringTable;
 
-	// void* manifest;
+	AOEFFImportTab importTable;
 
 	uint8_t* _data;
 	uint8_t* _const;
 	uint32_t* _text;
+	uint32_t* _text_init;
+	uint32_t* _text_deinit;
+	uint32_t* _text_fjt;
 	uint8_t* _evt;
 	uint8_t* _ivt;
 } AOEFbin;
