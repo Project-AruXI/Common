@@ -30,9 +30,9 @@ typedef struct AOEFFHdr {
 
 #define AHT_EXEC 0 // Executable
 #define AHT_KERN 1 // Kernel
-#define AHT_DLIB 3 // Dynamic library
-#define AHT_AOBJ 4 // Object file
-#define AHT_SLIB 5 // Static library
+#define AHT_DLIB 2 // Dynamic library
+#define AHT_AOBJ 3 // Object file
+#define AHT_SLIB 4 // Static library
 
 
 typedef struct AOEFFSctHdr {
