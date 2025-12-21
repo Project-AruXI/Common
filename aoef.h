@@ -4,7 +4,7 @@
 #include <stdint.h>
 
 
-typedef struct AOEFFHdr {
+typedef struct AOEFFHeader {
 	uint8_t hID[4];
 	uint32_t hType;
 	uint32_t hEntry;
@@ -16,7 +16,7 @@ typedef struct AOEFFHdr {
 	uint32_t hStrTabSize; // size (in bytes) of the string table
 	uint32_t hRelDirOff; // offset of the relocation tables directory
 	uint32_t hRelDirSize; // number of relocation tables entries (how many reloc tables)
-} AOEFFheader;
+} AOEFFhdr;
 
 #define AH_ID0 0xAE
 #define AH_ID1 'A'
@@ -35,21 +35,21 @@ typedef struct AOEFFHdr {
 #define AHT_SLIB 4 // Static library
 
 
-typedef struct AOEFFSctHdr {
+typedef struct AOEFFSectHeader {
 	char shSectName[8]; // name of the section
 	uint32_t shSectOff; // offset of the section
 	uint32_t shSectSize; // size of the section
 	uint32_t shSectRel; // index of the relocation table tied to this section
-} AOEFFSectHeader;
+} AOEFFSectHdr;
 
 
-typedef struct AOEFFSymEnt {
+typedef struct AOEFFSymbEntry {
 	uint32_t seSymbName; // index of the symbol name in the string table
 	uint32_t seSymbSize; // size of the data that the symbol is referring to
 	uint32_t seSymbVal; // value of the symbol
 	uint8_t seSymbInfo; // symbol information ([symbol type, symbol locality])
 	uint32_t seSymbSect; // section index the symbol is in, undefined if external
-} AOEFFSymbEntry;
+} AOEFFSymEnt;
 
 #define SE_SECT_UNDEF 0xFFFFFFFF // For external symbols
 
@@ -126,7 +126,7 @@ typedef struct AOEFFImportTable {
 	uint32_t imCount; // number of import entries
 } AOEFFImportTab;
 
-typedef enum AOEF_BIN_FILETYPE {
+typedef enum AOEFBinFileType {
 	AOEF_FT_AOBJ,
 	AOEF_FT_EXEC,
 	AOEF_FT_DLIB,
@@ -134,11 +134,11 @@ typedef enum AOEF_BIN_FILETYPE {
 	AOEF_FT_KERN
 } AOEFbin_ft;
 
-typedef struct AOEF_BIN {
+typedef struct AOEFBinary {
 	AOEFbin_ft binarytype;
-	AOEFFheader header;
-	AOEFFSectHeader* sectHdrTable;
-	AOEFFSymbEntry* symbEntTable;
+	AOEFFhdr header;
+	AOEFFSectHdr* sectHdrTable;
+	AOEFFSymEnt* symbEntTable;
 	AOEFFStrTab symbStringTable;
 	AOEFFRelTableDir reltabDir;
 	AOEFFDyLibTab dyLibTable;
