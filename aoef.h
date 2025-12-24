@@ -14,8 +14,18 @@ typedef struct AOEFFHeader {
 	uint32_t hSymbSize; // number of symbol entries
 	uint32_t hStrTabOff; // offset of the string table
 	uint32_t hStrTabSize; // size (in bytes) of the string table
-	uint32_t hRelDirOff; // offset of the relocation tables directory
-	uint32_t hRelDirSize; // number of relocation tables entries (how many reloc tables)
+	uint32_t hRelStrTabOff; // offset of the relocation string table
+	uint32_t hRelStrTabSize; // size (in bytes) of the relocation string table
+	uint32_t hTRelTabOff; // offset of the static relocation tables
+	uint32_t hTRelTabSize; // number of static relocation tables entries (how many reloc tables)
+	uint32_t hDRelTabOff; // offset of the dynamic relocation tables
+	uint32_t hDRelTabSize; // number of dynamic relocation tables entries (how many reloc tables)
+	uint32_t hDyLibTabOff; // offset of the dynamic library table
+	uint32_t hDyLibTabSize; // number of dynamic library entries
+	uint32_t hDyLibStrTabOff; // offset of the dynamic library string table
+	uint32_t hDyLibStrTabSize; // size (in bytes) of the dynamic library string table
+	uint32_t hImportTabOff; // offset of the import table
+	uint32_t hImportTabSize; // number of import entries
 } AOEFFhdr;
 
 #define AH_ID0 0xAE
@@ -39,7 +49,6 @@ typedef struct AOEFFSectHeader {
 	char shSectName[8]; // name of the section
 	uint32_t shSectOff; // offset of the section
 	uint32_t shSectSize; // size of the section
-	uint32_t shSectRel; // index of the relocation table tied to this section
 } AOEFFSectHdr;
 
 
@@ -79,52 +88,54 @@ typedef struct AOEFFRelStringTable {
 	char* rstStrs;
 } AOEFFRelStrTab;
 
-typedef struct AOEFFRelEntry {
+typedef struct AOEFFTRelEntry {
+	uint32_t reOff; // offset from the start of the section
+	uint8_t reSymb; // index of the symbol in symbol table
+	uint8_t reType; // type of relocation (RE_ARU32_*)
+	int32_t reAddend; // addend to be added to the symbol value
+} AOEFFTRelEnt;
+
+typedef struct AOEFFTRelTable {
+	uint8_t relSect; // which section this relocation table is for
+	uint32_t relTabName; // index of relocation table name in relocation string table
+	AOEFFTRelEnt* relEntries;
+	uint32_t relCount; // number of relocation entries
+} AOEFFTRelTab;
+
+typedef struct AOEFFDRelEntry {
 	uint32_t reOff; // offset from the start of the section
 	uint32_t reSymb; // index of the symbol in symbol table
 	uint8_t reType; // type of relocation (RE_ARU32_*)
-} AOEFFRelEnt;
+	int32_t reAddend; // addend to be added to the symbol value
+} AOEFFDRelEnt;
 
-typedef struct AOEFFRelTable {
+typedef struct AOEFFDRelTable {
 	uint8_t relSect; // which section this relocation table is for
-	uint32_t relTabName; // index of relocation table name
-	AOEFFRelEnt** relEntries;
+	uint32_t relTabName; // index of relocation table name in relocation string table
+	AOEFFDRelEnt* relEntries;
 	uint32_t relCount; // number of relocation entries
-} AOEFFRelTab;
-
-typedef struct AOEFFRelTableDirectory {
-	AOEFFRelTab* reldTables;
-	uint8_t reldCount; // number of relocation tables
-} AOEFFRelTableDir;
+} AOEFFDRelTab;
 
 #define RE_ARU32_ABS14 0
 #define RE_ARU32_MEM9 1
 #define RE_ARU32_IR24 2
 #define RE_ARU32_IR19 3
+#define RE_ARU32_DECOMP 4
 
 typedef struct AOEFFDynamicLibEntry {
 	uint32_t dlName; // index of the dynamic library name in dynamic string table
 	uint32_t dlVersion; // version of the dynamic library
 } AOEFFDyLibEnt;
 
-typedef struct AOEFFDynamicLibTable {
-	AOEFFDyLibEnt* dlEntries;
-	uint32_t dlCount; // number of dynamic library entries
-} AOEFFDyLibTab;
-
 typedef struct AOEFFDynamicStringTable {
 	char* dlstStrs;
 } AOEFFDyStrTab;
 
 typedef struct AOEFFImportEntry {
-	uint32_t ieName; // index of the imported symbol name in the string table
+	uint32_t ieSymb; // index of the imported symbol in the symbol table
 	uint32_t ieDyLib; // index of the dynamic library this symbol is imported from in the dynamic library table
 } AOEFFImportEnt;
 
-typedef struct AOEFFImportTable {
-	AOEFFImportEnt* imEntries;
-	uint32_t imCount; // number of import entries
-} AOEFFImportTab;
 
 typedef enum AOEFBinFileType {
 	AOEF_FT_AOBJ,
@@ -136,15 +147,22 @@ typedef enum AOEFBinFileType {
 
 typedef struct AOEFBinary {
 	AOEFbin_ft binarytype;
+
 	AOEFFhdr header;
+
 	AOEFFSectHdr* sectHdrTable;
+
 	AOEFFSymEnt* symbEntTable;
 	AOEFFStrTab symbStringTable;
-	AOEFFRelTableDir reltabDir;
-	AOEFFDyLibTab dyLibTable;
+
+	AOEFFRelStrTab relStringTable;
+	AOEFFTRelTab* tRelTables;
+	AOEFFDRelTab* dRelTables;
+
+	AOEFFDyLibEnt* dyLibTable;
 	AOEFFDyStrTab dyLibStringTable;
 
-	AOEFFImportTab importTable;
+	AOEFFImportEnt* importTable;
 
 	uint8_t* _data;
 	uint8_t* _const;
@@ -152,6 +170,7 @@ typedef struct AOEFBinary {
 	uint32_t* _text_init;
 	uint32_t* _text_deinit;
 	uint32_t* _text_fjt;
+
 	uint8_t* _evt;
 	uint8_t* _ivt;
 } AOEFbin;
