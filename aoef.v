@@ -137,6 +137,9 @@ pub const	re_aru32_mem9 = 1
 pub const	re_aru32_ir24 = 2
 pub const	re_aru32_ir19 = 3
 pub const re_aru32_decomp = 4
+pub const re_aru32_abs8 = 5
+pub const re_aru32_abs16 = 6
+pub const re_aru32_abs32 = 7
 
 pub struct AOEFFDyLibEntry {
 pub:

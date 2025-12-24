@@ -121,6 +121,9 @@ typedef struct AOEFFDRelTable {
 #define RE_ARU32_IR24 2
 #define RE_ARU32_IR19 3
 #define RE_ARU32_DECOMP 4
+#define RE_ARU32_ABS8 5
+#define RE_ARU32_ABS16 6
+#define RE_ARU32_ABS32 7
 
 typedef struct AOEFFDynamicLibEntry {
 	uint32_t dlName; // index of the dynamic library name in dynamic string table
