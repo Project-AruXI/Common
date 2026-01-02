@@ -112,8 +112,8 @@ typedef struct AOEFFDRelEntry {
 typedef struct AOEFFDRelTable {
 	uint8_t relSect; // which section this relocation table is for
 	uint32_t relTabName; // index of relocation table name in relocation string table
-	AOEFFDRelEnt* relEntries;
 	uint32_t relCount; // number of relocation entries
+	AOEFFDRelEnt* relEntries;
 } AOEFFDRelTab;
 
 #define RE_ARU32_ABS14 0
