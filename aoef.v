@@ -111,8 +111,8 @@ pub struct AOEFFTRelTable {
 pub:
 	relSect u8 // which section this relocation table is for
 	relTabName u32 // index of relocation table name in relocation string table
-	relEntries &AOEFFTRelEntry
 	relCount u32 // number of relocation entries
+	relEntries &AOEFFTRelEntry
 }
 
 pub struct AOEFFDRelEntry {
