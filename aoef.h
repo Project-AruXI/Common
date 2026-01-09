@@ -26,6 +26,8 @@ typedef struct AOEFFHeader {
 	uint32_t hDyLibStrTabSize; // size (in bytes) of the dynamic library string table
 	uint32_t hImportTabOff; // offset of the import table
 	uint32_t hImportTabSize; // number of import entries
+	uint32_t hExportTabOff; // offset of the export table
+	uint32_t hExportTabSize; // number of export entries
 } AOEFFhdr;
 
 #define AH_ID0 0xAE
@@ -127,7 +129,7 @@ typedef struct AOEFFDRelTable {
 
 typedef struct AOEFFDynamicLibEntry {
 	uint32_t dlName; // index of the dynamic library name in dynamic string table
-	uint32_t dlVersion; // version of the dynamic library
+	uint16_t dlVersion; // version of the dynamic library required (major.minor.patch: 8 bits each)
 } AOEFFDyLibEnt;
 
 typedef struct AOEFFDynamicStringTable {
@@ -138,6 +140,11 @@ typedef struct AOEFFImportEntry {
 	uint32_t ieSymb; // index of the imported symbol in the symbol table
 	uint32_t ieDyLib; // index of the dynamic library this symbol is imported from in the dynamic library table
 } AOEFFImportEnt;
+
+typedef struct AOEFFExportEntry {
+	uint32_t eeSymb; // index of the exported symbol in the symbol table
+	uint32_t eeAddress; // address of the exported symbol
+} AOEFFExportEnt;
 
 
 typedef enum AOEFBinFileType {
@@ -166,6 +173,7 @@ typedef struct AOEFBinary {
 	AOEFFDyStrTab dyLibStringTable;
 
 	AOEFFImportEnt* importTable;
+	AOEFFExportEnt* exportTable;
 
 	uint8_t* _data;
 	uint8_t* _const;

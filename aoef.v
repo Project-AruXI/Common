@@ -23,6 +23,8 @@ pub:
 	hDyLibStrTabSize u32 // size (in bytes) of the dynamic library string table
 	hImportTabOff u32 // offset of the import table
 	hImportTabSize u32 // number of import entries
+	// hExportTabOff u32 // offset of the export table
+	// hExportTabSize u32 // number of export entries
 }
 
 // Header ID and file type constants (converted from C macros)
@@ -158,6 +160,12 @@ pub:
 	ieDyLib u32 // index of the dynamic library this symbol is imported from in the dynamic library table
 }
 
+pub struct AOEFFExportEntry {
+pub:
+	eeSymb u32 // index of the exported symbol in the symbol table
+	eeAddress u32 // address of the exported symbol
+}
+
 
 pub enum AOEFBinFormatType {
 	aoef_ft_aobj
@@ -186,6 +194,7 @@ pub:
 	dyLibStringTable AOEFFDyStrTable
 
 	importTable      &AOEFFImportEntry
+	exportTable      &AOEFFExportEntry
 
 	data_            &u8
 	const_           &u8
