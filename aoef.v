@@ -124,8 +124,8 @@ pub struct AOEFFDRelTable {
 pub:
 	relSect u8 // which section this relocation table is for
 	relTabName u32 // index of relocation table name in relocation string table
-	relEntries &AOEFFDRelEntry
 	relCount u32 // number of relocation entries
+	relEntries &AOEFFDRelEntry
 }
 
 // Relocation type constants
@@ -141,7 +141,7 @@ pub const re_aru32_abs32 = 7
 pub struct AOEFFDyLibEntry {
 pub:
 	dlName u32 // index of the dynamic library name in dynamic string table
-	dlVersion u32 // version of the dynamic library
+	dlVersion u16 // version of the dynamic library
 }
 
 pub struct AOEFFDyStrTable {
@@ -151,7 +151,7 @@ pub:
 
 pub struct AOEFFImportEntry {
 pub:
-	ieName u32 // index of the imported symbol name in the string table
+	ieSymb u32 // index of the imported symbol name in the string table
 	ieDyLib u32 // index of the dynamic library this symbol is imported from in the dynamic library table
 }
 
