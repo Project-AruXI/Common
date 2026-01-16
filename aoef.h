@@ -72,11 +72,6 @@ typedef struct AOEFFSymbEntry {
 #define SE_ABSV_T 1
 #define SE_FUNC_T 2
 #define SE_OBJ_T 3
-// Extra object types, not necessary
-#define SE_OBJ_ARR_T 4
-#define SE_OBJ_STRUCT_T 5
-#define SE_OBJ_UNION_T 6
-#define SE_OBJ_PTR_T 7
 
 #define SE_LOCAL 0
 #define SE_GLOBL 1
@@ -106,7 +101,7 @@ typedef struct AOEFFTRelTable {
 
 typedef struct AOEFFDRelEntry {
 	uint32_t reOff; // offset from the start of the section
-	uint32_t reSymb; // index of the symbol in symbol table
+	uint8_t reSymb; // index of the symbol in symbol table
 	uint8_t reType; // type of relocation (RE_ARU32_*)
 	int32_t reAddend; // addend to be added to the symbol value
 } AOEFFDRelEnt;
@@ -181,6 +176,7 @@ typedef struct AOEFBinary {
 	uint32_t* _text_init;
 	uint32_t* _text_deinit;
 	uint32_t* _text_fjt;
+	uint32_t* _text_djt;
 
 	uint8_t* _evt;
 	uint8_t* _ivt;
