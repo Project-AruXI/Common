@@ -1,2 +1,7 @@
 *.o
+
+# To include or not to include, that is the question
 *.a
+*.so
+*.dll
+*.def

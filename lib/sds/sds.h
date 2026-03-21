@@ -212,6 +212,7 @@ sds sdsnewlen(const void* init, size_t initlen);
 sds sdsnew(const char* init);
 sds sdsempty(void);
 sds sdsdup(const sds s);
+void sdsfree(sds s);
 sds sdsgrowzero(sds s, size_t len);
 sds sdscatlen(sds s, const void* t, size_t len);
 sds sdscat(sds s, const char* t);
@@ -255,9 +256,9 @@ void* sdsAllocPtr(sds s);
  * Sometimes the program SDS is linked to, may use a different set of
  * allocators, but may want to allocate or free things that SDS will
  * respectively free or allocate. */
-void* sdsmalloc(size_t size);
-void* sdsrealloc(void* ptr, size_t size);
-void sdsfree(void* ptr);
+void* sds_malloc(size_t size);
+void* sds_realloc(void* ptr, size_t size);
+void sds_free(void* ptr);
 
 #ifdef REDIS_TEST
 int sdsTest(int argc, char* argv[]);
