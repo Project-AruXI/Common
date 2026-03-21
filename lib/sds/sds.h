@@ -255,9 +255,9 @@ void* sdsAllocPtr(sds s);
  * Sometimes the program SDS is linked to, may use a different set of
  * allocators, but may want to allocate or free things that SDS will
  * respectively free or allocate. */
-void* sds_malloc(size_t size);
-void* sds_realloc(void* ptr, size_t size);
-void sds_free(void* ptr);
+void* sdsmalloc(size_t size);
+void* sdsrealloc(void* ptr, size_t size);
+void sdsfree(void* ptr);
 
 #ifdef REDIS_TEST
 int sdsTest(int argc, char* argv[]);
