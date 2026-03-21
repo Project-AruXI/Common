@@ -1,0 +1,38 @@
+// AUTO-GENERATED — DO NOT EDIT
+// Source: opcodes.json  |  ISA: {{isa}} v{{version}}  |  Generated: {{date}}
+// To update: edit opcodes.json then run scripts/generate.py
+
+module opcodes
+
+pub const aru_word_size     = u8({{word_size}})
+pub const aru_opcode_bits   = u8({{opcode_bits}})
+pub const aru_int_registers = u8({{int_registers}})
+pub const aru_fp_registers  = u8({{fp_registers}})
+pub const aru_vec_registers = u8({{vector_registers}})
+
+// ── Opcodes ───────────────────────────────────────────────────────────────────
+{{#opcodes}}
+// {{category}}
+pub const opcode_{{name|<22}} = u8(0x{{VALUE_HEX}})  // {{mnemonic}}{{#variant}} [{{variant}}]{{/variant}} — {{description}}
+{{/opcodes}}
+
+// ── Sub-opcodes ───────────────────────────────────────────────────────────────
+{{#sub_opcodes}}
+// {{parent_name}}
+pub const sub_{{parent_name}}_{{name|<18}} = u8(0x{{VALUE_HEX}})  // {{description}}
+{{/sub_opcodes}}
+
+// ── Aliases ───────────────────────────────────────────────────────────────────
+{{#aliases}}
+pub const opcode_{{name|<22}} = opcode_{{alias_of}}  // {{description}}
+{{/aliases}}
+
+// ── Reverse lookup ────────────────────────────────────────────────────────────
+pub const opcode_names = {
+{{#opcodes}}
+	u8(0x{{VALUE_HEX}}): '{{mnemonic}}',
+{{/opcodes}}
+}
+
+pub fn is_immediate_opcode(op u8) bool { return op & 1 == 0 }
+pub fn is_register_opcode(op u8)  bool { return op & 1 == 1 }

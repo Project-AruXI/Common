@@ -1,0 +1,803 @@
+{
+  "_meta": {
+    "isa": "Aru32",
+    "version": "1.1.0",
+    "description": "Master opcode definitions. DO NOT manually edit generated files \u2014 edit this file and run scripts/generate.py.",
+    "word_size": 32,
+    "opcode_bits": 8,
+    "int_registers": 16,
+    "fp_registers": 16,
+    "vector_registers": 6,
+    "_encoding_conventions": [
+      "Opcodes are always 8 bits (bits 31-24).",
+      "If an instruction has both I and R variants, their opcodes must be sequential: even=immediate (bit0=0), odd=register (bit0=1).",
+      "Single-variant instructions occupy one slot; bit 0 has no special meaning.",
+      "Paired instructions share one mnemonic; the assembler picks the opcode from operand types."
+    ]
+  },
+  "categories": {
+    "integer_arithmetic": {
+      "description": "Integer arithmetic operations"
+    },
+    "integer_manipulation": {
+      "description": "Bitwise and data movement operations"
+    },
+    "integer_memory": {
+      "description": "Load and store operations"
+    },
+    "branching": {
+      "description": "Control flow operations"
+    },
+    "system": {
+      "description": "System and privileged operations"
+    },
+    "fp": {
+      "description": "Floating-point operations (single precision)"
+    },
+    "fp_memory": {
+      "description": "Floating-point load and store"
+    },
+    "fp_convert": {
+      "description": "Floating-point conversion operations"
+    },
+    "fp_system": {
+      "description": "Floating-point control/status register"
+    },
+    "avext": {
+      "description": "AVExt 512-bit vector extension"
+    },
+    "extend": {
+      "description": "Sign/zero extension operations"
+    }
+  },
+  "opcodes": {
+    "_c0": "\u2500\u2500 Sign/zero extend: 0x04-0x07 \u2500\u2500",
+    "sxb": {
+      "value": "0x04",
+      "mnemonic": "sxb",
+      "category": "extend",
+      "description": "Sign-extend byte to word"
+    },
+    "sxh": {
+      "value": "0x05",
+      "mnemonic": "sxh",
+      "category": "extend",
+      "description": "Sign-extend halfword to word"
+    },
+    "uxb": {
+      "value": "0x06",
+      "mnemonic": "uxb",
+      "category": "extend",
+      "description": "Zero-extend byte to word"
+    },
+    "uxh": {
+      "value": "0x07",
+      "mnemonic": "uxh",
+      "category": "extend",
+      "description": "Zero-extend halfword to word"
+    },
+    "_c1": "\u2500\u2500 Integer memory \u2500\u2500",
+    "ld": {
+      "value": "0x14",
+      "mnemonic": "ld",
+      "category": "integer_memory",
+      "description": "Load word"
+    },
+    "str": {
+      "value": "0x1C",
+      "mnemonic": "str",
+      "category": "integer_memory",
+      "description": "Store word"
+    },
+    "ldb": {
+      "value": "0x34",
+      "mnemonic": "ldb",
+      "category": "integer_memory",
+      "description": "Load byte"
+    },
+    "strb": {
+      "value": "0x3C",
+      "mnemonic": "strb",
+      "category": "integer_memory",
+      "description": "Store byte"
+    },
+    "ldbs": {
+      "value": "0x54",
+      "mnemonic": "ldbs",
+      "category": "integer_memory",
+      "description": "Load byte signed"
+    },
+    "strh": {
+      "value": "0x5C",
+      "mnemonic": "strh",
+      "category": "integer_memory",
+      "description": "Store halfword"
+    },
+    "ldbz": {
+      "value": "0x74",
+      "mnemonic": "ldbz",
+      "category": "integer_memory",
+      "description": "Load byte zero-extended"
+    },
+    "ldh": {
+      "value": "0x94",
+      "mnemonic": "ldh",
+      "category": "integer_memory",
+      "description": "Load halfword"
+    },
+    "ldhs": {
+      "value": "0xB4",
+      "mnemonic": "ldhs",
+      "category": "integer_memory",
+      "description": "Load halfword signed"
+    },
+    "ldhz": {
+      "value": "0xD4",
+      "mnemonic": "ldhz",
+      "category": "integer_memory",
+      "description": "Load halfword zero-extended"
+    },
+    "_c2": "\u2500\u2500 Integer manipulation (I/R pairs) \u2500\u2500",
+    "or_i": {
+      "value": "0x40",
+      "mnemonic": "or",
+      "category": "integer_manipulation",
+      "variant": "I",
+      "pair": "or_r",
+      "description": "OR immediate"
+    },
+    "or_r": {
+      "value": "0x41",
+      "mnemonic": "or",
+      "category": "integer_manipulation",
+      "variant": "R",
+      "pair": "or_i",
+      "description": "OR register"
+    },
+    "and_i": {
+      "value": "0x42",
+      "mnemonic": "and",
+      "category": "integer_manipulation",
+      "variant": "I",
+      "pair": "and_r",
+      "description": "AND immediate"
+    },
+    "and_r": {
+      "value": "0x43",
+      "mnemonic": "and",
+      "category": "integer_manipulation",
+      "variant": "R",
+      "pair": "and_i",
+      "description": "AND register"
+    },
+    "xor_i": {
+      "value": "0x44",
+      "mnemonic": "xor",
+      "category": "integer_manipulation",
+      "variant": "I",
+      "pair": "xor_r",
+      "description": "XOR immediate"
+    },
+    "xor_r": {
+      "value": "0x45",
+      "mnemonic": "xor",
+      "category": "integer_manipulation",
+      "variant": "R",
+      "pair": "xor_i",
+      "description": "XOR register"
+    },
+    "not_i": {
+      "value": "0x46",
+      "mnemonic": "not",
+      "category": "integer_manipulation",
+      "variant": "I",
+      "pair": "not_r",
+      "description": "NOT immediate"
+    },
+    "not_r": {
+      "value": "0x47",
+      "mnemonic": "not",
+      "category": "integer_manipulation",
+      "variant": "R",
+      "pair": "not_i",
+      "description": "NOT register"
+    },
+    "lsl_i": {
+      "value": "0x48",
+      "mnemonic": "lsl",
+      "category": "integer_manipulation",
+      "variant": "I",
+      "pair": "lsl_r",
+      "description": "Logical shift left immediate"
+    },
+    "lsl_r": {
+      "value": "0x49",
+      "mnemonic": "lsl",
+      "category": "integer_manipulation",
+      "variant": "R",
+      "pair": "lsl_i",
+      "description": "Logical shift left register"
+    },
+    "lsr_i": {
+      "value": "0x4A",
+      "mnemonic": "lsr",
+      "category": "integer_manipulation",
+      "variant": "I",
+      "pair": "lsr_r",
+      "description": "Logical shift right immediate"
+    },
+    "lsr_r": {
+      "value": "0x4B",
+      "mnemonic": "lsr",
+      "category": "integer_manipulation",
+      "variant": "R",
+      "pair": "lsr_i",
+      "description": "Logical shift right register"
+    },
+    "asr_i": {
+      "value": "0x4C",
+      "mnemonic": "asr",
+      "category": "integer_manipulation",
+      "variant": "I",
+      "pair": "asr_r",
+      "description": "Arithmetic shift right immediate"
+    },
+    "asr_r": {
+      "value": "0x4D",
+      "mnemonic": "asr",
+      "category": "integer_manipulation",
+      "variant": "R",
+      "pair": "asr_i",
+      "description": "Arithmetic shift right register"
+    },
+    "mv_i": {
+      "value": "0x84",
+      "mnemonic": "mv",
+      "category": "integer_manipulation",
+      "variant": "I",
+      "pair": "mv_r",
+      "description": "Move immediate"
+    },
+    "mv_r": {
+      "value": "0x85",
+      "mnemonic": "mv",
+      "category": "integer_manipulation",
+      "variant": "R",
+      "pair": "mv_i",
+      "description": "Move register"
+    },
+    "_c3": "\u2500\u2500 Integer arithmetic \u2500\u2500",
+    "add_i": {
+      "value": "0x80",
+      "mnemonic": "add",
+      "category": "integer_arithmetic",
+      "variant": "I",
+      "pair": "add_r",
+      "description": "Add immediate"
+    },
+    "add_r": {
+      "value": "0x81",
+      "mnemonic": "add",
+      "category": "integer_arithmetic",
+      "variant": "R",
+      "pair": "add_i",
+      "description": "Add register"
+    },
+    "adds_i": {
+      "value": "0x88",
+      "mnemonic": "adds",
+      "category": "integer_arithmetic",
+      "variant": "I",
+      "pair": "adds_r",
+      "description": "Add signed immediate"
+    },
+    "adds_r": {
+      "value": "0x89",
+      "mnemonic": "adds",
+      "category": "integer_arithmetic",
+      "variant": "R",
+      "pair": "adds_i",
+      "description": "Add signed register"
+    },
+    "sub_i": {
+      "value": "0x90",
+      "mnemonic": "sub",
+      "category": "integer_arithmetic",
+      "variant": "I",
+      "pair": "sub_r",
+      "description": "Subtract immediate"
+    },
+    "sub_r": {
+      "value": "0x91",
+      "mnemonic": "sub",
+      "category": "integer_arithmetic",
+      "variant": "R",
+      "pair": "sub_i",
+      "description": "Subtract register"
+    },
+    "subs_i": {
+      "value": "0x98",
+      "mnemonic": "subs",
+      "category": "integer_arithmetic",
+      "variant": "I",
+      "pair": "subs_r",
+      "description": "Subtract signed immediate"
+    },
+    "subs_r": {
+      "value": "0x99",
+      "mnemonic": "subs",
+      "category": "integer_arithmetic",
+      "variant": "R",
+      "pair": "subs_i",
+      "description": "Subtract signed register"
+    },
+    "mul": {
+      "value": "0xA0",
+      "mnemonic": "mul",
+      "category": "integer_arithmetic",
+      "description": "Multiply unsigned (R-only, no I variant)"
+    },
+    "smul": {
+      "value": "0xA2",
+      "mnemonic": "smul",
+      "category": "integer_arithmetic",
+      "description": "Multiply signed (R-only, no I variant)"
+    },
+    "div": {
+      "value": "0xA8",
+      "mnemonic": "div",
+      "category": "integer_arithmetic",
+      "description": "Divide unsigned (R-only, no I variant)"
+    },
+    "sdiv": {
+      "value": "0xAA",
+      "mnemonic": "sdiv",
+      "category": "integer_arithmetic",
+      "description": "Divide signed (R-only, no I variant)"
+    },
+    "_c4": "\u2500\u2500 Branching \u2500\u2500",
+    "ub": {
+      "value": "0xC0",
+      "mnemonic": "ub",
+      "category": "branching",
+      "description": "Unconditional branch immediate (Bi-type)"
+    },
+    "ubr": {
+      "value": "0xC2",
+      "mnemonic": "ubr",
+      "category": "branching",
+      "description": "Unconditional branch register (Bu-type)"
+    },
+    "bcond": {
+      "value": "0xC4",
+      "mnemonic": "b",
+      "category": "branching",
+      "description": "Conditional branch (Bc-type)"
+    },
+    "call": {
+      "value": "0xC6",
+      "mnemonic": "call",
+      "category": "branching",
+      "description": "Call subroutine (Bi-type)"
+    },
+    "ret": {
+      "value": "0xC8",
+      "mnemonic": "ret",
+      "category": "branching",
+      "description": "Return from subroutine (Bu-type)"
+    },
+    "_c5": "\u2500\u2500 System \u2500\u2500",
+    "scall": {
+      "value": "0xBE",
+      "mnemonic": "scall",
+      "category": "system",
+      "description": "System call dispatch \u2014 specific instruction in sub-opcode field (S-type)",
+      "sub_opcodes": {
+        "syscall": {
+          "value": "0x00",
+          "description": "Invoke OS syscall; syscall number in r0"
+        },
+        "sysret": {
+          "value": "0x01",
+          "description": "Return from syscall/exception handler"
+        },
+        "hlt": {
+          "value": "0x02",
+          "description": "Halt processor"
+        },
+        "mvcsr": {
+          "value": "0x03",
+          "description": "Move CSR to integer register"
+        },
+        "mvcsr_w": {
+          "value": "0x04",
+          "description": "Move integer register to CSR"
+        },
+        "iret": {
+          "value": "0x05",
+          "description": "Return from interrupt"
+        },
+        "tlbflush": {
+          "value": "0x06",
+          "description": "Flush TLB (privileged)"
+        },
+        "fence": {
+          "value": "0x07",
+          "description": "Memory fence / barrier"
+        },
+        "_res08": {
+          "value": "0x08",
+          "description": "RESERVED"
+        },
+        "_res09": {
+          "value": "0x09",
+          "description": "RESERVED"
+        },
+        "_res0A": {
+          "value": "0x0A",
+          "description": "RESERVED"
+        },
+        "_res0B": {
+          "value": "0x0B",
+          "description": "RESERVED"
+        },
+        "_res0C": {
+          "value": "0x0C",
+          "description": "RESERVED"
+        },
+        "_res0D": {
+          "value": "0x0D",
+          "description": "RESERVED"
+        },
+        "_res0E": {
+          "value": "0x0E",
+          "description": "RESERVED"
+        },
+        "_res0F": {
+          "value": "0x0F",
+          "description": "RESERVED \u2014 scall sub-opcode escape"
+        }
+      }
+    },
+    "_c6": "\u2500\u2500 Floating point: 0x20-0x3F \u2500\u2500",
+    "fadd": {
+      "value": "0x20",
+      "mnemonic": "fadd",
+      "category": "fp",
+      "description": "FP add"
+    },
+    "fsub": {
+      "value": "0x21",
+      "mnemonic": "fsub",
+      "category": "fp",
+      "description": "FP subtract"
+    },
+    "fmul": {
+      "value": "0x22",
+      "mnemonic": "fmul",
+      "category": "fp",
+      "description": "FP multiply"
+    },
+    "fdiv": {
+      "value": "0x23",
+      "mnemonic": "fdiv",
+      "category": "fp",
+      "description": "FP divide"
+    },
+    "fsqrt": {
+      "value": "0x24",
+      "mnemonic": "fsqrt",
+      "category": "fp",
+      "description": "FP square root"
+    },
+    "fmadd": {
+      "value": "0x25",
+      "mnemonic": "fmadd",
+      "category": "fp",
+      "description": "FP fused multiply-add: fd = fs1*fs2 + fs3"
+    },
+    "fmsub": {
+      "value": "0x26",
+      "mnemonic": "fmsub",
+      "category": "fp",
+      "description": "FP fused multiply-subtract: fd = fs1*fs2 - fs3"
+    },
+    "fnmadd": {
+      "value": "0x27",
+      "mnemonic": "fnmadd",
+      "category": "fp",
+      "description": "FP negated fused multiply-add: fd = -(fs1*fs2 + fs3)"
+    },
+    "fnmsub": {
+      "value": "0x28",
+      "mnemonic": "fnmsub",
+      "category": "fp",
+      "description": "FP negated fused multiply-subtract"
+    },
+    "fmin": {
+      "value": "0x29",
+      "mnemonic": "fmin",
+      "category": "fp",
+      "description": "FP minimum"
+    },
+    "fmax": {
+      "value": "0x2A",
+      "mnemonic": "fmax",
+      "category": "fp",
+      "description": "FP maximum"
+    },
+    "fabs": {
+      "value": "0x2B",
+      "mnemonic": "fabs",
+      "category": "fp",
+      "description": "FP absolute value"
+    },
+    "fneg": {
+      "value": "0x2C",
+      "mnemonic": "fneg",
+      "category": "fp",
+      "description": "FP negate"
+    },
+    "fclass": {
+      "value": "0x2D",
+      "mnemonic": "fclass",
+      "category": "fp",
+      "description": "FP classify \u2014 result bitmask to int reg"
+    },
+    "feq": {
+      "value": "0x2E",
+      "mnemonic": "feq",
+      "category": "fp",
+      "description": "FP equal \u2014 result 0/1 to int reg"
+    },
+    "flt": {
+      "value": "0x2F",
+      "mnemonic": "flt",
+      "category": "fp",
+      "description": "FP less-than \u2014 result 0/1 to int reg"
+    },
+    "fle": {
+      "value": "0x30",
+      "mnemonic": "fle",
+      "category": "fp",
+      "description": "FP less-than-or-equal \u2014 result 0/1 to int reg"
+    },
+    "fmv": {
+      "value": "0x31",
+      "mnemonic": "fmv",
+      "category": "fp",
+      "description": "FP register copy"
+    },
+    "fmv_x_s": {
+      "value": "0x32",
+      "mnemonic": "fmv.x.s",
+      "category": "fp",
+      "description": "FP to int reg \u2014 bit-pattern, no conversion"
+    },
+    "fmv_s_x": {
+      "value": "0x33",
+      "mnemonic": "fmv.s.x",
+      "category": "fp",
+      "description": "Int reg to FP \u2014 bit-pattern, no conversion"
+    },
+    "flw": {
+      "value": "0x35",
+      "mnemonic": "flw",
+      "category": "fp_memory",
+      "description": "FP load word"
+    },
+    "fsw": {
+      "value": "0x36",
+      "mnemonic": "fsw",
+      "category": "fp_memory",
+      "description": "FP store word"
+    },
+    "fcvt_w_s": {
+      "value": "0x37",
+      "mnemonic": "fcvt.w.s",
+      "category": "fp_convert",
+      "description": "FP to signed int32"
+    },
+    "fcvt_wu_s": {
+      "value": "0x38",
+      "mnemonic": "fcvt.wu.s",
+      "category": "fp_convert",
+      "description": "FP to unsigned int32"
+    },
+    "fcvt_s_w": {
+      "value": "0x39",
+      "mnemonic": "fcvt.s.w",
+      "category": "fp_convert",
+      "description": "Signed int32 to FP"
+    },
+    "fcvt_s_wu": {
+      "value": "0x3A",
+      "mnemonic": "fcvt.s.wu",
+      "category": "fp_convert",
+      "description": "Unsigned int32 to FP"
+    },
+    "fcsrr": {
+      "value": "0x3B",
+      "mnemonic": "fcsrr",
+      "category": "fp_system",
+      "description": "Read FCSR to int reg"
+    },
+    "fcsrw": {
+      "value": "0x3D",
+      "mnemonic": "fcsrw",
+      "category": "fp_system",
+      "description": "Write int reg to FCSR"
+    },
+    "fcsrs": {
+      "value": "0x3E",
+      "mnemonic": "fcsrs",
+      "category": "fp_system",
+      "description": "Swap int reg with FCSR"
+    },
+    "_fp_esc": {
+      "value": "0x3F",
+      "mnemonic": "_reserved",
+      "category": "fp",
+      "description": "RESERVED \u2014 FP sub-opcode escape"
+    },
+    "_c7": "\u2500\u2500 AVExt: 0x60-0x7F \u2500\u2500",
+    "vadd": {
+      "value": "0x60",
+      "mnemonic": "vadd",
+      "category": "avext",
+      "description": "Vector element-wise add"
+    },
+    "vsub": {
+      "value": "0x61",
+      "mnemonic": "vsub",
+      "category": "avext",
+      "description": "Vector element-wise subtract"
+    },
+    "vmul": {
+      "value": "0x62",
+      "mnemonic": "vmul",
+      "category": "avext",
+      "description": "Vector element-wise multiply"
+    },
+    "vdiv": {
+      "value": "0x63",
+      "mnemonic": "vdiv",
+      "category": "avext",
+      "description": "Vector element-wise divide"
+    },
+    "vfma": {
+      "value": "0x64",
+      "mnemonic": "vfma",
+      "category": "avext",
+      "description": "Vector fused multiply-add"
+    },
+    "vand": {
+      "value": "0x65",
+      "mnemonic": "vand",
+      "category": "avext",
+      "description": "Vector bitwise AND"
+    },
+    "vor": {
+      "value": "0x66",
+      "mnemonic": "vor",
+      "category": "avext",
+      "description": "Vector bitwise OR"
+    },
+    "vxor": {
+      "value": "0x67",
+      "mnemonic": "vxor",
+      "category": "avext",
+      "description": "Vector bitwise XOR"
+    },
+    "vnot": {
+      "value": "0x68",
+      "mnemonic": "vnot",
+      "category": "avext",
+      "description": "Vector bitwise NOT"
+    },
+    "vld": {
+      "value": "0x69",
+      "mnemonic": "vld",
+      "category": "avext",
+      "description": "Vector load (512-bit)"
+    },
+    "vst": {
+      "value": "0x6A",
+      "mnemonic": "vst",
+      "category": "avext",
+      "description": "Vector store (512-bit)"
+    },
+    "vmov": {
+      "value": "0x6B",
+      "mnemonic": "vmov",
+      "category": "avext",
+      "description": "Vector register copy"
+    },
+    "vbroadcast": {
+      "value": "0x6C",
+      "mnemonic": "vbroadcast",
+      "category": "avext",
+      "description": "Broadcast scalar to all lanes"
+    },
+    "vextract": {
+      "value": "0x6D",
+      "mnemonic": "vextract",
+      "category": "avext",
+      "description": "Extract lane to int register"
+    },
+    "vinsert": {
+      "value": "0x6E",
+      "mnemonic": "vinsert",
+      "category": "avext",
+      "description": "Insert int register into lane"
+    },
+    "vcmp": {
+      "value": "0x6F",
+      "mnemonic": "vcmp",
+      "category": "avext",
+      "description": "Vector compare, result mask to int reg"
+    },
+    "vredsum": {
+      "value": "0x70",
+      "mnemonic": "vredsum",
+      "category": "avext",
+      "description": "Vector horizontal sum reduction"
+    },
+    "vredmax": {
+      "value": "0x71",
+      "mnemonic": "vredmax",
+      "category": "avext",
+      "description": "Vector horizontal max reduction"
+    },
+    "vredmin": {
+      "value": "0x72",
+      "mnemonic": "vredmin",
+      "category": "avext",
+      "description": "Vector horizontal min reduction"
+    },
+    "vlsl": {
+      "value": "0x73",
+      "mnemonic": "vlsl",
+      "category": "avext",
+      "description": "Vector logical shift left"
+    },
+    "vlsr": {
+      "value": "0x75",
+      "mnemonic": "vlsr",
+      "category": "avext",
+      "description": "Vector logical shift right"
+    },
+    "vasr": {
+      "value": "0x76",
+      "mnemonic": "vasr",
+      "category": "avext",
+      "description": "Vector arithmetic shift right"
+    },
+    "vsplat": {
+      "value": "0x77",
+      "mnemonic": "vsplat",
+      "category": "avext",
+      "description": "Splat immediate into all lanes"
+    },
+    "_avext_esc": {
+      "value": "0x7F",
+      "mnemonic": "_reserved",
+      "category": "avext",
+      "description": "RESERVED \u2014 AVExt sub-opcode escape"
+    }
+  },
+  "aliases": {
+    "nop": {
+      "alias_of": "add_i",
+      "description": "No-op (add r0, r0, #0)"
+    },
+    "cmp": {
+      "alias_of": "subs_i",
+      "description": "Compare immediate (subs, result discarded)"
+    },
+    "cmpr": {
+      "alias_of": "subs_r",
+      "description": "Compare register (subs, result discarded)"
+    }
+  }
+}

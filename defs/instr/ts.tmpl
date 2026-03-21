@@ -1,0 +1,43 @@
+// AUTO-GENERATED — DO NOT EDIT
+// Source: opcodes.json  |  ISA: {{isa}} v{{version}}  |  Generated: {{date}}
+// To update: edit opcodes.json then run scripts/generate.py
+
+export const ARU_WORD_SIZE     = {{word_size}};
+export const ARU_OPCODE_BITS   = {{opcode_bits}};
+export const ARU_INT_REGISTERS = {{int_registers}};
+export const ARU_FP_REGISTERS  = {{fp_registers}};
+export const ARU_VEC_REGISTERS = {{vector_registers}};
+
+// ── Opcodes ───────────────────────────────────────────────────────────────────
+// I/R pairs share a mnemonic. I-variant opcode is even, R-variant is odd.
+export const enum Opcode {
+{{#opcodes}}
+  // {{category}}
+  {{NAME_UPPER|<22}} = 0x{{VALUE_HEX}},  // {{mnemonic}}{{#variant}} [{{variant}}]{{/variant}} — {{description}}
+{{/opcodes}}
+}
+
+// ── Sub-opcodes ───────────────────────────────────────────────────────────────
+{{#sub_opcode_parents}}
+export const enum {{ParentPascal}}SubOp {
+{{#entries}}
+  {{NAME_UPPER|<20}} = 0x{{VALUE_HEX}},  // {{description}}
+{{/entries}}
+}
+{{/sub_opcode_parents}}
+
+// ── Aliases ───────────────────────────────────────────────────────────────────
+{{#aliases}}
+export const {{NAME_UPPER|<22}} = Opcode.{{ALIAS_UPPER}};  // {{description}}
+{{/aliases}}
+
+// ── Reverse lookup: opcode byte -> mnemonic ───────────────────────────────────
+export const OPCODE_NAMES = new Map<number, string>([
+{{#opcodes}}
+  [0x{{VALUE_HEX}}, "{{mnemonic}}"],
+{{/opcodes}}
+]);
+
+// ── Mnemonic helpers ──────────────────────────────────────────────────────────
+export function isImmediateOpcode(op: number): boolean { return (op & 1) === 0; }
+export function isRegisterOpcode(op: number):  boolean { return (op & 1) === 1; }

@@ -1,0 +1,35 @@
+// AUTO-GENERATED — DO NOT EDIT
+// Source: opcodes.json  |  ISA: {{isa}} v{{version}}  |  Generated: {{date}}
+// To update: edit opcodes.json then run scripts/generate.py
+
+#pragma once
+#include <stdint.h>
+
+/* ISA constants */
+#define ARU_WORD_SIZE      {{word_size}}
+#define ARU_OPCODE_BITS    {{opcode_bits}}
+#define ARU_INT_REGISTERS  {{int_registers}}
+#define ARU_FP_REGISTERS   {{fp_registers}}
+#define ARU_VEC_REGISTERS  {{vector_registers}}
+
+/* ── Opcodes ──────────────────────────────────────────────────────────────────
+ * Naming: OPCODE_<KEY> where key is the internal JSON key.
+ * For I/R pairs, both share the same mnemonic in assembly.
+ * I-variant opcodes are even (bit 0 = 0); R-variant opcodes are odd (bit 0 = 1).
+ * Use the MNEMONIC_DISPATCH table below to map a mnemonic string to both opcodes.
+ * --------------------------------------------------------------------------- */
+{{#opcodes}}
+/* {{category}}{{#variant}} [{{variant}}-type, pair={{pair}}]{{/variant}} */
+#define OPCODE_{{NAME_UPPER|<22}} ((uint8_t)0x{{VALUE_HEX}}U)  /* {{mnemonic}} — {{description}} */
+{{/opcodes}}
+
+/* ── Sub-opcodes ────────────────────────────────────────────────────────────── */
+{{#sub_opcodes}}
+/* {{parent_name}} */
+#define SUB_{{PARENT_UPPER}}_{{NAME_UPPER|<18}} ((uint8_t)0x{{VALUE_HEX}}U)  /* {{description}} */
+{{/sub_opcodes}}
+
+/* ── Aliases ────────────────────────────────────────────────────────────────── */
+{{#aliases}}
+#define OPCODE_{{NAME_UPPER|<22}} OPCODE_{{ALIAS_UPPER|<22}}  /* {{description}} */
+{{/aliases}}
