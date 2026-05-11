@@ -330,7 +330,6 @@
       "category": "Bu",
       "description": ""
     },
-  
     "sys": {
       "value": "0xFF",
       "mnemonic": "sys",
@@ -379,7 +378,6 @@
         }
       }
     },
-
     "addf": {
       "value": "0x6E",
       "mnemonic": "addf",
@@ -387,49 +385,49 @@
       "description": "FP add"
     },
     "subf": {
-      "value": "0x21",
+      "value": "0x6F",
       "mnemonic": "subf",
       "category": "fp",
       "description": "FP subtract"
     },
     "mulf": {
-      "value": "0x22",
+      "value": "0x70",
       "mnemonic": "mulf",
       "category": "fp",
       "description": "FP multiply"
     },
     "divf": {
-      "value": "0x23",
+      "value": "0x71",
       "mnemonic": "divf",
       "category": "fp",
       "description": "FP divide"
     },
     "sqrtf": {
-      "value": "0x24",
+      "value": "0x72",
       "mnemonic": "sqrtf",
       "category": "fp",
       "description": "FP square root"
     },
     "minf": {
-      "value": "0x29",
+      "value": "0x73",
       "mnemonic": "minf",
       "category": "fp",
       "description": "FP minimum"
     },
     "maxf": {
-      "value": "0x2A",
+      "value": "0x74",
       "mnemonic": "maxf",
       "category": "fp",
       "description": "FP maximum"
     },
     "absf": {
-      "value": "0x2B",
+      "value": "0x75",
       "mnemonic": "absf",
       "category": "fp",
       "description": "FP absolute value"
     },
     "negf": {
-      "value": "0x2C",
+      "value": "0x76",
       "mnemonic": "negf",
       "category": "fp",
       "description": "FP negate"

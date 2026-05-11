@@ -12,30 +12,6 @@ pub const aru_vec_registers = u8(6)
 
 // ── Opcodes ───────────────────────────────────────────────────────────────────
 
-// fp
-pub const opcode_subf = u8(0x21) // subf — FP subtract
-
-// fp
-pub const opcode_mulf = u8(0x22) // mulf — FP multiply
-
-// fp
-pub const opcode_divf = u8(0x23) // divf — FP divide
-
-// fp
-pub const opcode_sqrtf = u8(0x24) // sqrtf — FP square root
-
-// fp
-pub const opcode_minf = u8(0x29) // minf — FP minimum
-
-// fp
-pub const opcode_maxf = u8(0x2A) // maxf — FP maximum
-
-// fp
-pub const opcode_absf = u8(0x2B) // absf — FP absolute value
-
-// fp
-pub const opcode_negf = u8(0x2C) // negf — FP negate
-
 // Bi
 pub const opcode_ub = u8(0x5B) // ub — 
 
@@ -53,6 +29,30 @@ pub const opcode_ret = u8(0x5F) // ret —
 
 // FM
 pub const opcode_addf = u8(0x6E) // addf — FP add
+
+// fp
+pub const opcode_subf = u8(0x6F) // subf — FP subtract
+
+// fp
+pub const opcode_mulf = u8(0x70) // mulf — FP multiply
+
+// fp
+pub const opcode_divf = u8(0x71) // divf — FP divide
+
+// fp
+pub const opcode_sqrtf = u8(0x72) // sqrtf — FP square root
+
+// fp
+pub const opcode_minf = u8(0x73) // minf — FP minimum
+
+// fp
+pub const opcode_maxf = u8(0x74) // maxf — FP maximum
+
+// fp
+pub const opcode_absf = u8(0x75) // absf — FP absolute value
+
+// fp
+pub const opcode_negf = u8(0x76) // negf — FP negate
 
 // 
 pub const opcode_fusedf = u8(0x77) // fusedf — FP fused operations
@@ -231,22 +231,6 @@ pub const opcode_nop = opcode_add_i // No-op (add r0, r0, #0)
 // ── Reverse lookup ────────────────────────────────────────────────────────────
 pub const opcode_names = {
 
-	u8(0x21): 'subf',
-
-	u8(0x22): 'mulf',
-
-	u8(0x23): 'divf',
-
-	u8(0x24): 'sqrtf',
-
-	u8(0x29): 'minf',
-
-	u8(0x2A): 'maxf',
-
-	u8(0x2B): 'absf',
-
-	u8(0x2C): 'negf',
-
 	u8(0x5B): 'ub',
 
 	u8(0x5C): 'ubr',
@@ -258,6 +242,22 @@ pub const opcode_names = {
 	u8(0x5F): 'ret',
 
 	u8(0x6E): 'addf',
+
+	u8(0x6F): 'subf',
+
+	u8(0x70): 'mulf',
+
+	u8(0x71): 'divf',
+
+	u8(0x72): 'sqrtf',
+
+	u8(0x73): 'minf',
+
+	u8(0x74): 'maxf',
+
+	u8(0x75): 'absf',
+
+	u8(0x76): 'negf',
 
 	u8(0x77): 'fusedf',
 

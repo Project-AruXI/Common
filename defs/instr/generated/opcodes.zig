@@ -18,30 +18,6 @@ pub const meta = .{
 // I/R pairs share a mnemonic. The I-variant opcode is even, R-variant is odd.
 pub const Opcode = enum(u8) {
 
-  // fp
-  subf = 0x21, // subf — FP subtract
-
-  // fp
-  mulf = 0x22, // mulf — FP multiply
-
-  // fp
-  divf = 0x23, // divf — FP divide
-
-  // fp
-  sqrtf = 0x24, // sqrtf — FP square root
-
-  // fp
-  minf = 0x29, // minf — FP minimum
-
-  // fp
-  maxf = 0x2A, // maxf — FP maximum
-
-  // fp
-  absf = 0x2B, // absf — FP absolute value
-
-  // fp
-  negf = 0x2C, // negf — FP negate
-
   // Bi
   ub = 0x5B, // ub — 
 
@@ -59,6 +35,30 @@ pub const Opcode = enum(u8) {
 
   // FM
   addf = 0x6E, // addf — FP add
+
+  // fp
+  subf = 0x6F, // subf — FP subtract
+
+  // fp
+  mulf = 0x70, // mulf — FP multiply
+
+  // fp
+  divf = 0x71, // divf — FP divide
+
+  // fp
+  sqrtf = 0x72, // sqrtf — FP square root
+
+  // fp
+  minf = 0x73, // minf — FP minimum
+
+  // fp
+  maxf = 0x74, // maxf — FP maximum
+
+  // fp
+  absf = 0x75, // absf — FP absolute value
+
+  // fp
+  negf = 0x76, // negf — FP negate
 
   // 
   fusedf = 0x77, // fusedf — FP fused operations
@@ -232,6 +232,18 @@ pub const Opcode = enum(u8) {
   pub fn mnemonic(self: Opcode) []const u8 {
     return switch (self) {
 
+      .ub => "ub",
+
+      .ubr => "ubr",
+
+      .b => "b",
+
+      .call => "call",
+
+      .ret => "ret",
+
+      .addf => "addf",
+
       .subf => "subf",
 
       .mulf => "mulf",
@@ -247,18 +259,6 @@ pub const Opcode = enum(u8) {
       .absf => "absf",
 
       .negf => "negf",
-
-      .ub => "ub",
-
-      .ubr => "ubr",
-
-      .b => "b",
-
-      .call => "call",
-
-      .ret => "ret",
-
-      .addf => "addf",
 
       .fusedf => "fusedf",
 

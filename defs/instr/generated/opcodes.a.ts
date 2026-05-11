@@ -10,30 +10,6 @@ export const ARU_VEC_REGISTERS: u8 = 6;
 
 // ── Opcodes ───────────────────────────────────────────────────────────────────
 
-// fp
-export const OPCODE_SUBF: u8 = 0x21; // subf — FP subtract
-
-// fp
-export const OPCODE_MULF: u8 = 0x22; // mulf — FP multiply
-
-// fp
-export const OPCODE_DIVF: u8 = 0x23; // divf — FP divide
-
-// fp
-export const OPCODE_SQRTF: u8 = 0x24; // sqrtf — FP square root
-
-// fp
-export const OPCODE_MINF: u8 = 0x29; // minf — FP minimum
-
-// fp
-export const OPCODE_MAXF: u8 = 0x2A; // maxf — FP maximum
-
-// fp
-export const OPCODE_ABSF: u8 = 0x2B; // absf — FP absolute value
-
-// fp
-export const OPCODE_NEGF: u8 = 0x2C; // negf — FP negate
-
 // Bi
 export const OPCODE_UB: u8 = 0x5B; // ub — 
 
@@ -51,6 +27,30 @@ export const OPCODE_RET: u8 = 0x5F; // ret —
 
 // FM
 export const OPCODE_ADDF: u8 = 0x6E; // addf — FP add
+
+// fp
+export const OPCODE_SUBF: u8 = 0x6F; // subf — FP subtract
+
+// fp
+export const OPCODE_MULF: u8 = 0x70; // mulf — FP multiply
+
+// fp
+export const OPCODE_DIVF: u8 = 0x71; // divf — FP divide
+
+// fp
+export const OPCODE_SQRTF: u8 = 0x72; // sqrtf — FP square root
+
+// fp
+export const OPCODE_MINF: u8 = 0x73; // minf — FP minimum
+
+// fp
+export const OPCODE_MAXF: u8 = 0x74; // maxf — FP maximum
+
+// fp
+export const OPCODE_ABSF: u8 = 0x75; // absf — FP absolute value
+
+// fp
+export const OPCODE_NEGF: u8 = 0x76; // negf — FP negate
 
 // 
 export const OPCODE_FUSEDF: u8 = 0x77; // fusedf — FP fused operations

@@ -12,30 +12,6 @@ export const ARU_VEC_REGISTERS = 6;
 // I/R pairs share a mnemonic. I-variant opcode is even, R-variant is odd.
 export const enum Opcode {
 
-  // fp
-  SUBF = 0x21, // subf — FP subtract
-
-  // fp
-  MULF = 0x22, // mulf — FP multiply
-
-  // fp
-  DIVF = 0x23, // divf — FP divide
-
-  // fp
-  SQRTF = 0x24, // sqrtf — FP square root
-
-  // fp
-  MINF = 0x29, // minf — FP minimum
-
-  // fp
-  MAXF = 0x2A, // maxf — FP maximum
-
-  // fp
-  ABSF = 0x2B, // absf — FP absolute value
-
-  // fp
-  NEGF = 0x2C, // negf — FP negate
-
   // Bi
   UB = 0x5B, // ub — 
 
@@ -53,6 +29,30 @@ export const enum Opcode {
 
   // FM
   ADDF = 0x6E, // addf — FP add
+
+  // fp
+  SUBF = 0x6F, // subf — FP subtract
+
+  // fp
+  MULF = 0x70, // mulf — FP multiply
+
+  // fp
+  DIVF = 0x71, // divf — FP divide
+
+  // fp
+  SQRTF = 0x72, // sqrtf — FP square root
+
+  // fp
+  MINF = 0x73, // minf — FP minimum
+
+  // fp
+  MAXF = 0x74, // maxf — FP maximum
+
+  // fp
+  ABSF = 0x75, // absf — FP absolute value
+
+  // fp
+  NEGF = 0x76, // negf — FP negate
 
   // 
   FUSEDF = 0x77, // fusedf — FP fused operations
@@ -268,22 +268,6 @@ export const NOP = Opcode.ADD_I; // No-op (add r0, r0, #0)
 // ── Reverse lookup: opcode byte -> mnemonic ───────────────────────────────────
 export const OPCODE_NAMES = new Map<number, string>([
 
-  [0x21, "subf"],
-
-  [0x22, "mulf"],
-
-  [0x23, "divf"],
-
-  [0x24, "sqrtf"],
-
-  [0x29, "minf"],
-
-  [0x2A, "maxf"],
-
-  [0x2B, "absf"],
-
-  [0x2C, "negf"],
-
   [0x5B, "ub"],
 
   [0x5C, "ubr"],
@@ -295,6 +279,22 @@ export const OPCODE_NAMES = new Map<number, string>([
   [0x5F, "ret"],
 
   [0x6E, "addf"],
+
+  [0x6F, "subf"],
+
+  [0x70, "mulf"],
+
+  [0x71, "divf"],
+
+  [0x72, "sqrtf"],
+
+  [0x73, "minf"],
+
+  [0x74, "maxf"],
+
+  [0x75, "absf"],
+
+  [0x76, "negf"],
 
   [0x77, "fusedf"],
 

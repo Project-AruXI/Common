@@ -19,30 +19,6 @@
  * Use the MNEMONIC_DISPATCH table below to map a mnemonic string to both opcodes.
  * --------------------------------------------------------------------------- */
 
-/* fp */
-#define OPCODE_SUBF ((uint8_t)0x21U) /* subf — FP subtract */
-
-/* fp */
-#define OPCODE_MULF ((uint8_t)0x22U) /* mulf — FP multiply */
-
-/* fp */
-#define OPCODE_DIVF ((uint8_t)0x23U) /* divf — FP divide */
-
-/* fp */
-#define OPCODE_SQRTF ((uint8_t)0x24U) /* sqrtf — FP square root */
-
-/* fp */
-#define OPCODE_MINF ((uint8_t)0x29U) /* minf — FP minimum */
-
-/* fp */
-#define OPCODE_MAXF ((uint8_t)0x2AU) /* maxf — FP maximum */
-
-/* fp */
-#define OPCODE_ABSF ((uint8_t)0x2BU) /* absf — FP absolute value */
-
-/* fp */
-#define OPCODE_NEGF ((uint8_t)0x2CU) /* negf — FP negate */
-
 /* Bi */
 #define OPCODE_UB ((uint8_t)0x5BU) /* ub —  */
 
@@ -60,6 +36,30 @@
 
 /* FM */
 #define OPCODE_ADDF ((uint8_t)0x6EU) /* addf — FP add */
+
+/* fp */
+#define OPCODE_SUBF ((uint8_t)0x6FU) /* subf — FP subtract */
+
+/* fp */
+#define OPCODE_MULF ((uint8_t)0x70U) /* mulf — FP multiply */
+
+/* fp */
+#define OPCODE_DIVF ((uint8_t)0x71U) /* divf — FP divide */
+
+/* fp */
+#define OPCODE_SQRTF ((uint8_t)0x72U) /* sqrtf — FP square root */
+
+/* fp */
+#define OPCODE_MINF ((uint8_t)0x73U) /* minf — FP minimum */
+
+/* fp */
+#define OPCODE_MAXF ((uint8_t)0x74U) /* maxf — FP maximum */
+
+/* fp */
+#define OPCODE_ABSF ((uint8_t)0x75U) /* absf — FP absolute value */
+
+/* fp */
+#define OPCODE_NEGF ((uint8_t)0x76U) /* negf — FP negate */
 
 /*  */
 #define OPCODE_FUSEDF ((uint8_t)0x77U) /* fusedf — FP fused operations */
