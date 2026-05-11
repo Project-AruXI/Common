@@ -1,0 +1,24 @@
+{
+  "targets": {
+    "c": {
+      "template": "c.tmpl",
+      "output": "opcodes.h"
+    },
+    "v": {
+      "template": "v.tmpl",
+      "output": "opcodes.v"
+    },
+    "zig": {
+      "template": "zig.tmpl",
+      "output": "opcodes.zig"
+    },
+    "typescript": {
+      "template": "ts.tmpl",
+      "output": "opcodes.ts"
+    },
+    "assemblyscript": {
+      "template": "assemblyscript.tmpl",
+      "output": "opcodes.a.ts"
+    }
+  }
+}

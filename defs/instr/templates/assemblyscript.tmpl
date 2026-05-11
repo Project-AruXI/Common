@@ -2,27 +2,27 @@
 // Source: opcodes.json  |  ISA: {{isa}} v{{version}}  |  Generated: {{date}}
 // To update: edit opcodes.json then run scripts/generate.py
 
-export const ARU_WORD_SIZE: u8     = {{word_size}};
-export const ARU_OPCODE_BITS: u8   = {{opcode_bits}};
+export const ARU_WORD_SIZE: u8 = {{word_size}};
+export const ARU_OPCODE_BITS: u8 = {{opcode_bits}};
 export const ARU_INT_REGISTERS: u8 = {{int_registers}};
-export const ARU_FP_REGISTERS: u8  = {{fp_registers}};
+export const ARU_FP_REGISTERS: u8 = {{fp_registers}};
 export const ARU_VEC_REGISTERS: u8 = {{vector_registers}};
 
 // ── Opcodes ───────────────────────────────────────────────────────────────────
 {{#opcodes}}
 // {{category}}
-export const OPCODE_{{NAME_UPPER}}: u8 = 0x{{VALUE_HEX}};  // {{mnemonic}}{{#variant}} [{{variant}}]{{/variant}} — {{description}}
+export const OPCODE_{{NAME_UPPER}}: u8 = 0x{{VALUE_HEX}}; // {{mnemonic}}{{#variant}} [{{variant}}]{{/variant}} — {{description}}
 {{/opcodes}}
 
 // ── Sub-opcodes ───────────────────────────────────────────────────────────────
 {{#sub_opcodes}}
 // {{parent_name}}
-export const SUB_{{PARENT_UPPER}}_{{NAME_UPPER}}: u8 = 0x{{VALUE_HEX}};  // {{description}}
+export const SUB_{{PARENT_UPPER}}_{{NAME_UPPER}}: u8 = 0x{{VALUE_HEX}}; // {{description}}
 {{/sub_opcodes}}
 
 // ── Aliases ───────────────────────────────────────────────────────────────────
 {{#aliases}}
-export const OPCODE_{{NAME_UPPER}}: u8 = OPCODE_{{ALIAS_UPPER}};  // {{description}}
+export const OPCODE_{{NAME_UPPER}}: u8 = OPCODE_{{ALIAS_UPPER}}; // {{description}}
 {{/aliases}}
 
 // ── Helpers ───────────────────────────────────────────────────────────────────

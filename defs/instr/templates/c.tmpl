@@ -6,11 +6,11 @@
 #include <stdint.h>
 
 /* ISA constants */
-#define ARU_WORD_SIZE      {{word_size}}
-#define ARU_OPCODE_BITS    {{opcode_bits}}
-#define ARU_INT_REGISTERS  {{int_registers}}
-#define ARU_FP_REGISTERS   {{fp_registers}}
-#define ARU_VEC_REGISTERS  {{vector_registers}}
+#define ARU_WORD_SIZE {{word_size}}
+#define ARU_OPCODE_BITS {{opcode_bits}}
+#define ARU_INT_REGISTERS {{int_registers}}
+#define ARU_FP_REGISTERS {{fp_registers}}
+#define ARU_VEC_REGISTERS {{vector_registers}}
 
 /* ── Opcodes ──────────────────────────────────────────────────────────────────
  * Naming: OPCODE_<KEY> where key is the internal JSON key.
@@ -20,16 +20,16 @@
  * --------------------------------------------------------------------------- */
 {{#opcodes}}
 /* {{category}}{{#variant}} [{{variant}}-type, pair={{pair}}]{{/variant}} */
-#define OPCODE_{{NAME_UPPER|<22}} ((uint8_t)0x{{VALUE_HEX}}U)  /* {{mnemonic}} — {{description}} */
+#define OPCODE_{{NAME_UPPER}} ((uint8_t)0x{{VALUE_HEX}}U) /* {{mnemonic}} — {{description}} */
 {{/opcodes}}
 
 /* ── Sub-opcodes ────────────────────────────────────────────────────────────── */
 {{#sub_opcodes}}
 /* {{parent_name}} */
-#define SUB_{{PARENT_UPPER}}_{{NAME_UPPER|<18}} ((uint8_t)0x{{VALUE_HEX}}U)  /* {{description}} */
+#define SUB_{{PARENT_UPPER}}_{{NAME_UPPER}} ((uint8_t)0x{{VALUE_HEX}}U) /* {{description}} */
 {{/sub_opcodes}}
 
 /* ── Aliases ────────────────────────────────────────────────────────────────── */
 {{#aliases}}
-#define OPCODE_{{NAME_UPPER|<22}} OPCODE_{{ALIAS_UPPER|<22}}  /* {{description}} */
+#define OPCODE_{{NAME_UPPER}} OPCODE_{{ALIAS_UPPER}} /* {{description}} */
 {{/aliases}}

@@ -2,14 +2,16 @@
 // Source: opcodes.json  |  ISA: {{isa}} v{{version}}  |  Generated: {{date}}
 // To update: edit opcodes.json then run scripts/generate.py
 
+// zig fmt: off
+
 const std = @import("std");
 
 pub const meta = .{
-  .word_size     = {{word_size}},
-  .opcode_bits   = {{opcode_bits}},
-  .int_registers = {{int_registers}},
-  .fp_registers  = {{fp_registers}},
-  .vec_registers = {{vector_registers}},
+  .wordSize = {{word_size}},
+  .opcodeBits = {{opcode_bits}},
+  .intRegisters = {{int_registers}},
+  .fpRegisters = {{fp_registers}},
+  .vecRegisters = {{vector_registers}},
 };
 
 // ── Opcodes ───────────────────────────────────────────────────────────────────
@@ -17,7 +19,7 @@ pub const meta = .{
 pub const Opcode = enum(u8) {
 {{#opcodes}}
   // {{category}}
-  {{name|<22}} = 0x{{VALUE_HEX}},  // {{mnemonic}}{{#variant}} [{{variant}}]{{/variant}} — {{description}}
+  {{name}} = 0x{{VALUE_HEX}}, // {{mnemonic}}{{#variant}} [{{variant}}]{{/variant}} — {{description}}
 {{/opcodes}}
 
   pub fn fromByte(b: u8) ?Opcode {
@@ -26,7 +28,7 @@ pub const Opcode = enum(u8) {
   pub fn mnemonic(self: Opcode) []const u8 {
     return switch (self) {
 {{#opcodes}}
-      .{{name|<22}} => "{{mnemonic}}",
+      .{{name}} => "{{mnemonic}}",
 {{/opcodes}}
     };
   }
@@ -38,12 +40,12 @@ pub const Opcode = enum(u8) {
 {{#sub_opcode_parents}}
 pub const {{ParentPascal}}SubOp = enum(u8) {
 {{#entries}}
-  {{name|<20}} = 0x{{VALUE_HEX}},  // {{description}}
+  {{name}} = 0x{{VALUE_HEX}}, // {{description}}
 {{/entries}}
 };
 {{/sub_opcode_parents}}
 
 // ── Aliases ───────────────────────────────────────────────────────────────────
 {{#aliases}}
-pub const {{name|<22}} = Opcode.{{alias_of}};  // {{description}}
+pub const {{name}} = Opcode.{{alias_of}}; // {{description}}
 {{/aliases}}
