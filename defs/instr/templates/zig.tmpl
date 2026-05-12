@@ -19,7 +19,7 @@ pub const meta = .{
 pub const Opcode = enum(u8) {
 {{#opcodes}}
   // {{category}}
-  {{name}} = 0x{{VALUE_HEX}}, // {{mnemonic}}{{#variant}} [{{variant}}]{{/variant}} — {{description}}
+  {{NAME_UPPER}} = 0x{{VALUE_HEX}}, // {{mnemonic}}{{#variant}} [{{variant}}]{{/variant}} — {{description}}
 {{/opcodes}}
 
   pub fn fromByte(b: u8) ?Opcode {
@@ -28,7 +28,7 @@ pub const Opcode = enum(u8) {
   pub fn mnemonic(self: Opcode) []const u8 {
     return switch (self) {
 {{#opcodes}}
-      .{{name}} => "{{mnemonic}}",
+      .{{NAME_UPPER}} => "{{mnemonic}}",
 {{/opcodes}}
     };
   }
@@ -40,12 +40,12 @@ pub const Opcode = enum(u8) {
 {{#sub_opcode_parents}}
 pub const {{ParentPascal}}SubOp = enum(u8) {
 {{#entries}}
-  {{name}} = 0x{{VALUE_HEX}}, // {{description}}
+  {{NAME_UPPER}} = 0x{{VALUE_HEX}}, // {{description}}
 {{/entries}}
 };
 {{/sub_opcode_parents}}
 
 // ── Aliases ───────────────────────────────────────────────────────────────────
 {{#aliases}}
-pub const {{name}} = Opcode.{{alias_of}}; // {{description}}
+pub const {{NAME_UPPER}} = Opcode.{{alias_of}}; // {{description}}
 {{/aliases}}

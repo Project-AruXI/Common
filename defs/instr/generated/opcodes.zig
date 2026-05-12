@@ -19,211 +19,211 @@ pub const meta = .{
 pub const Opcode = enum(u8) {
 
   // Bi
-  ub = 0x5B, // ub — 
+  UB = 0x5B, // ub — 
 
   // Bu
-  ubr = 0x5C, // ubr — 
+  UBR = 0x5C, // ubr — 
 
   // Bc
-  b = 0x5D, // b — 
+  B = 0x5D, // b — 
 
   // Bi
-  call = 0x5E, // call — 
+  CALL = 0x5E, // call — 
 
   // Bu
-  ret = 0x5F, // ret — 
+  RET = 0x5F, // ret — 
 
   // FM
-  addf = 0x6E, // addf — FP add
+  ADDF = 0x6E, // addf — FP add
 
   // fp
-  subf = 0x6F, // subf — FP subtract
+  SUBF = 0x6F, // subf — FP subtract
 
   // fp
-  mulf = 0x70, // mulf — FP multiply
+  MULF = 0x70, // mulf — FP multiply
 
   // fp
-  divf = 0x71, // divf — FP divide
+  DIVF = 0x71, // divf — FP divide
 
   // fp
-  sqrtf = 0x72, // sqrtf — FP square root
+  SQRTF = 0x72, // sqrtf — FP square root
 
   // fp
-  minf = 0x73, // minf — FP minimum
+  MINF = 0x73, // minf — FP minimum
 
   // fp
-  maxf = 0x74, // maxf — FP maximum
+  MAXF = 0x74, // maxf — FP maximum
 
   // fp
-  absf = 0x75, // absf — FP absolute value
+  ABSF = 0x75, // absf — FP absolute value
 
   // fp
-  negf = 0x76, // negf — FP negate
+  NEGF = 0x76, // negf — FP negate
 
   // 
-  fusedf = 0x77, // fusedf — FP fused operations
+  FUSEDF = 0x77, // fusedf — FP fused operations
 
   // fp
-  mvf = 0x7D, // mvf — FP register copy
+  MVF = 0x7D, // mvf — FP register copy
 
   // fp
-  mvfi = 0x7E, // mvfi — FP to int reg — bit-pattern, no conversion
+  MVFI = 0x7E, // mvfi — FP to int reg — bit-pattern, no conversion
 
   // fp
-  mvif = 0x7F, // mvif — Int reg to FP — bit-pattern, no conversion
+  MVIF = 0x7F, // mvif — Int reg to FP — bit-pattern, no conversion
 
   // fp_convert
-  cvtfu = 0x80, // cvtfu — FP to unsigned int32
+  CVTFU = 0x80, // cvtfu — FP to unsigned int32
 
   // fp_convert
-  cvtfs = 0x81, // cvtfs — FP to signed int32
+  CVTFS = 0x81, // cvtfs — FP to signed int32
 
   // fp_convert
-  cvtuf = 0x82, // cvtuf — Unsigned int32 to FP
+  CVTUF = 0x82, // cvtuf — Unsigned int32 to FP
 
   // fp_convert
-  cvtsf = 0x83, // cvtsf — Signed int32 to FP
+  CVTSF = 0x83, // cvtsf — Signed int32 to FP
 
   // fp
-  classf = 0x87, // classf — FP classify — result bitmask to int reg
+  CLASSF = 0x87, // classf — FP classify — result bitmask to int reg
 
   // fp
-  cmpf = 0x88, // cmpf — Compare FP
+  CMPF = 0x88, // cmpf — Compare FP
 
   // fp
-  cmpfe = 0x89, // cmpfe — Compare FP, exception raise
+  CMPFE = 0x89, // cmpfe — Compare FP, exception raise
 
   // I
-  add_i = 0x90, // add — 
+  ADD_I = 0x90, // add — 
 
   // R
-  add_r = 0x91, // add — 
+  ADD_R = 0x91, // add — 
 
   // I
-  adds_i = 0x92, // adds — 
+  ADDS_I = 0x92, // adds — 
 
   // R
-  adds_r = 0x93, // adds — 
+  ADDS_R = 0x93, // adds — 
 
   // I
-  sub_i = 0x94, // sub — 
+  SUB_I = 0x94, // sub — 
 
   // R
-  sub_r = 0x95, // sub — 
+  SUB_R = 0x95, // sub — 
 
   // I
-  subs_i = 0x96, // subs — 
+  SUBS_I = 0x96, // subs — 
 
   // R
-  subs_r = 0x97, // subs — 
+  SUBS_R = 0x97, // subs — 
 
   // R
-  mul = 0x98, // mul — 
+  MUL = 0x98, // mul — 
 
   // R
-  smul = 0x99, // smul — 
+  SMUL = 0x99, // smul — 
 
   // R
-  div = 0x9A, // div — 
+  DIV = 0x9A, // div — 
 
   // R
-  sdiv = 0x9B, // sdiv — 
+  SDIV = 0x9B, // sdiv — 
 
   // I
-  or_i = 0xA2, // or — 
+  OR_I = 0xA2, // or — 
 
   // R
-  or_r = 0xA3, // or — 
+  OR_R = 0xA3, // or — 
 
   // I
-  and_i = 0xA4, // and — 
+  AND_I = 0xA4, // and — 
 
   // R
-  and_r = 0xA5, // and — 
+  AND_R = 0xA5, // and — 
 
   // I
-  xor_i = 0xA6, // xor — 
+  XOR_I = 0xA6, // xor — 
 
   // R
-  xor_r = 0xA7, // xor — 
+  XOR_R = 0xA7, // xor — 
 
   // I
-  not_i = 0xA8, // not — 
+  NOT_I = 0xA8, // not — 
 
   // R
-  not_r = 0xA9, // not — 
+  NOT_R = 0xA9, // not — 
 
   // I
-  lsl_i = 0xAA, // lsl — 
+  LSL_I = 0xAA, // lsl — 
 
   // R
-  lsl_r = 0xAB, // lsl — 
+  LSL_R = 0xAB, // lsl — 
 
   // I
-  lsr_i = 0xAC, // lsr — 
+  LSR_I = 0xAC, // lsr — 
 
   // 
-  lsr_r = 0xAD, // lsr — 
+  LSR_R = 0xAD, // lsr — 
 
   // I
-  asr_i = 0xAE, // asr — 
+  ASR_I = 0xAE, // asr — 
 
   // 
-  asr_r = 0xAF, // asr — 
+  ASR_R = 0xAF, // asr — 
 
   // I
-  mvi = 0xB0, // mvi — 
+  MVI = 0xB0, // mvi — 
 
   // R
-  sxb = 0xB1, // sxb — 
+  SXB = 0xB1, // sxb — 
 
   // R
-  sxh = 0xB2, // sxh — 
+  SXH = 0xB2, // sxh — 
 
   // R
-  uxb = 0xB3, // uxb — 
+  UXB = 0xB3, // uxb — 
 
   // R
-  uxh = 0xB4, // uxh — 
+  UXH = 0xB4, // uxh — 
 
   // M
-  ld = 0xC0, // ld — 
+  LD = 0xC0, // ld — 
 
   // M
-  ldb = 0xC1, // ldb — 
+  LDB = 0xC1, // ldb — 
 
   // M
-  ldbs = 0xC2, // ldbs — 
+  LDBS = 0xC2, // ldbs — 
 
   // M
-  ldbz = 0xC3, // ldbz — 
+  LDBZ = 0xC3, // ldbz — 
 
   // M
-  ldh = 0xC4, // ldh — 
+  LDH = 0xC4, // ldh — 
 
   // M
-  ldhs = 0xC5, // ldhs — 
+  LDHS = 0xC5, // ldhs — 
 
   // M
-  ldhz = 0xC6, // ldhz — 
+  LDHZ = 0xC6, // ldhz — 
 
   // M
-  str = 0xC7, // str — 
+  STR = 0xC7, // str — 
 
   // M
-  strb = 0xC8, // strb — 
+  STRB = 0xC8, // strb — 
 
   // M
-  strbh = 0xC9, // strbh — 
+  STRBH = 0xC9, // strbh — 
 
   // fp_memory
-  ldf = 0xCA, // ldf — FP load word
+  LDF = 0xCA, // ldf — FP load word
 
   // fp_memory
-  strf = 0xCB, // strf — FP store word
+  STRF = 0xCB, // strf — FP store word
 
   // S
-  sys = 0xFF, // sys — System specific instruction in sub-opcode field (S-type)
+  SYS = 0xFF, // sys — System specific instruction in sub-opcode field (S-type)
 
 
   pub fn fromByte(b: u8) ?Opcode {
@@ -232,143 +232,143 @@ pub const Opcode = enum(u8) {
   pub fn mnemonic(self: Opcode) []const u8 {
     return switch (self) {
 
-      .ub => "ub",
+      .UB => "ub",
 
-      .ubr => "ubr",
+      .UBR => "ubr",
 
-      .b => "b",
+      .B => "b",
 
-      .call => "call",
+      .CALL => "call",
 
-      .ret => "ret",
+      .RET => "ret",
 
-      .addf => "addf",
+      .ADDF => "addf",
 
-      .subf => "subf",
+      .SUBF => "subf",
 
-      .mulf => "mulf",
+      .MULF => "mulf",
 
-      .divf => "divf",
+      .DIVF => "divf",
 
-      .sqrtf => "sqrtf",
+      .SQRTF => "sqrtf",
 
-      .minf => "minf",
+      .MINF => "minf",
 
-      .maxf => "maxf",
+      .MAXF => "maxf",
 
-      .absf => "absf",
+      .ABSF => "absf",
 
-      .negf => "negf",
+      .NEGF => "negf",
 
-      .fusedf => "fusedf",
+      .FUSEDF => "fusedf",
 
-      .mvf => "mvf",
+      .MVF => "mvf",
 
-      .mvfi => "mvfi",
+      .MVFI => "mvfi",
 
-      .mvif => "mvif",
+      .MVIF => "mvif",
 
-      .cvtfu => "cvtfu",
+      .CVTFU => "cvtfu",
 
-      .cvtfs => "cvtfs",
+      .CVTFS => "cvtfs",
 
-      .cvtuf => "cvtuf",
+      .CVTUF => "cvtuf",
 
-      .cvtsf => "cvtsf",
+      .CVTSF => "cvtsf",
 
-      .classf => "classf",
+      .CLASSF => "classf",
 
-      .cmpf => "cmpf",
+      .CMPF => "cmpf",
 
-      .cmpfe => "cmpfe",
+      .CMPFE => "cmpfe",
 
-      .add_i => "add",
+      .ADD_I => "add",
 
-      .add_r => "add",
+      .ADD_R => "add",
 
-      .adds_i => "adds",
+      .ADDS_I => "adds",
 
-      .adds_r => "adds",
+      .ADDS_R => "adds",
 
-      .sub_i => "sub",
+      .SUB_I => "sub",
 
-      .sub_r => "sub",
+      .SUB_R => "sub",
 
-      .subs_i => "subs",
+      .SUBS_I => "subs",
 
-      .subs_r => "subs",
+      .SUBS_R => "subs",
 
-      .mul => "mul",
+      .MUL => "mul",
 
-      .smul => "smul",
+      .SMUL => "smul",
 
-      .div => "div",
+      .DIV => "div",
 
-      .sdiv => "sdiv",
+      .SDIV => "sdiv",
 
-      .or_i => "or",
+      .OR_I => "or",
 
-      .or_r => "or",
+      .OR_R => "or",
 
-      .and_i => "and",
+      .AND_I => "and",
 
-      .and_r => "and",
+      .AND_R => "and",
 
-      .xor_i => "xor",
+      .XOR_I => "xor",
 
-      .xor_r => "xor",
+      .XOR_R => "xor",
 
-      .not_i => "not",
+      .NOT_I => "not",
 
-      .not_r => "not",
+      .NOT_R => "not",
 
-      .lsl_i => "lsl",
+      .LSL_I => "lsl",
 
-      .lsl_r => "lsl",
+      .LSL_R => "lsl",
 
-      .lsr_i => "lsr",
+      .LSR_I => "lsr",
 
-      .lsr_r => "lsr",
+      .LSR_R => "lsr",
 
-      .asr_i => "asr",
+      .ASR_I => "asr",
 
-      .asr_r => "asr",
+      .ASR_R => "asr",
 
-      .mvi => "mvi",
+      .MVI => "mvi",
 
-      .sxb => "sxb",
+      .SXB => "sxb",
 
-      .sxh => "sxh",
+      .SXH => "sxh",
 
-      .uxb => "uxb",
+      .UXB => "uxb",
 
-      .uxh => "uxh",
+      .UXH => "uxh",
 
-      .ld => "ld",
+      .LD => "ld",
 
-      .ldb => "ldb",
+      .LDB => "ldb",
 
-      .ldbs => "ldbs",
+      .LDBS => "ldbs",
 
-      .ldbz => "ldbz",
+      .LDBZ => "ldbz",
 
-      .ldh => "ldh",
+      .LDH => "ldh",
 
-      .ldhs => "ldhs",
+      .LDHS => "ldhs",
 
-      .ldhz => "ldhz",
+      .LDHZ => "ldhz",
 
-      .str => "str",
+      .STR => "str",
 
-      .strb => "strb",
+      .STRB => "strb",
 
-      .strbh => "strbh",
+      .STRBH => "strbh",
 
-      .ldf => "ldf",
+      .LDF => "ldf",
 
-      .strf => "strf",
+      .STRF => "strf",
 
-      .sys => "sys",
+      .SYS => "sys",
 
     };
   }
@@ -380,41 +380,41 @@ pub const Opcode = enum(u8) {
 
 pub const FusedfSubOp = enum(u8) {
 
-  fmaddf = 0x00, // FP fused multiply-add: fd = fs1*fs2 + fs3
+  FMADDF = 0x00, // FP fused multiply-add: fd = fs1*fs2 + fs3
 
-  fmsubf = 0x01, // FP fused multiply-subtract: fd = fs1*fs2 - fs3
+  FMSUBF = 0x01, // FP fused multiply-subtract: fd = fs1*fs2 - fs3
 
-  fnmaddf = 0x02, // FP negated fused multiply-add: fd = -(fs1*fs2 + fs3)
+  FNMADDF = 0x02, // FP negated fused multiply-add: fd = -(fs1*fs2 + fs3)
 
-  fnmsubf = 0x03, // FP negated fused multiply-subtract
+  FNMSUBF = 0x03, // FP negated fused multiply-subtract
 
 };
 
 pub const SysSubOp = enum(u8) {
 
-  syscall = 0x00, // Invoke OS syscall
+  SYSCALL = 0x00, // Invoke OS syscall
 
-  hlt = 0x01, // Halt processor
+  HLT = 0x01, // Halt processor
 
-  si = 0x02, // Set interrupt bit
+  SI = 0x02, // Set interrupt bit
 
-  di = 0x03, // Disable interrupt bit
+  DI = 0x03, // Disable interrupt bit
 
-  eret = 0x04, // Return from exception
+  ERET = 0x04, // Return from exception
 
-  mvir = 0x05, // Move IR to integer register
+  MVIR = 0x05, // Move IR to integer register
 
-  wcstr = 0x06, // Move integer register to CSTR
+  WCSTR = 0x06, // Move integer register to CSTR
 
-  rcstr = 0x07, // Move CSTR to integer register
+  RCSTR = 0x07, // Move CSTR to integer register
 
-  wfcsr = 0x08, // Move integer register to FCSR
+  WFCSR = 0x08, // Move integer register to FCSR
 
-  rfcsr = 0x09, // Move FCSR to integer register
+  RFCSR = 0x09, // Move FCSR to integer register
 
 };
 
 
 // ── Aliases ───────────────────────────────────────────────────────────────────
 
-pub const nop = Opcode.add_i; // No-op (add r0, r0, #0)
+pub const NOP = Opcode.add_i; // No-op (add r0, r0, #0)
