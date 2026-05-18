@@ -38,32 +38,32 @@ pub const Opcode = enum(u8) {
   CLASSF = 0x87,
   CMPF = 0x88,
   CMPFE = 0x89,
-  ADD_I = 0x90,
-  ADD_R = 0x91,
-  ADDS_I = 0x92,
-  ADDS_R = 0x93,
-  SUB_I = 0x94,
-  SUB_R = 0x95,
-  SUBS_I = 0x96,
-  SUBS_R = 0x97,
+  ADDI = 0x90,
+  ADD = 0x91,
+  ADDSI = 0x92,
+  ADDS = 0x93,
+  SUBI = 0x94,
+  SUB = 0x95,
+  SUBSI = 0x96,
+  SUBS = 0x97,
   MUL = 0x98,
   SMUL = 0x99,
   DIV = 0x9A,
   SDIV = 0x9B,
-  OR_I = 0xA2,
-  OR_R = 0xA3,
-  AND_I = 0xA4,
-  AND_R = 0xA5,
-  XOR_I = 0xA6,
-  XOR_R = 0xA7,
-  NOT_I = 0xA8,
-  NOT_R = 0xA9,
-  LSL_I = 0xAA,
-  LSL_R = 0xAB,
-  LSR_I = 0xAC,
-  LSR_R = 0xAD,
-  ASR_I = 0xAE,
-  ASR_R = 0xAF,
+  ORI = 0xA2,
+  OR = 0xA3,
+  ANDI = 0xA4,
+  AND = 0xA5,
+  XORI = 0xA6,
+  XOR = 0xA7,
+  NOTI = 0xA8,
+  NOT = 0xA9,
+  LSLI = 0xAA,
+  LSL = 0xAB,
+  LSRI = 0xAC,
+  LSR = 0xAD,
+  ASRI = 0xAE,
+  ASR = 0xAF,
   MVI = 0xB0,
   SXB = 0xB1,
   SXH = 0xB2,
@@ -91,13 +91,10 @@ pub const Opcode = enum(u8) {
 
   /// Given the string opcode, return the respective opcode enum.
   pub fn fromString(name: []const u8) ?Opcode {
-    return std.meta.stringToEnum(Opcode, name) catch {
-      // A possible null return is when the opcode string is a syscall or fusedf opcode.
-      // In that case, check the sub-opcodes.
-      return SysSubOp.fromString(name) orelse
-        FusedfSubOp.fromString(name) orelse
-        null;
-    };
+    var buf: [16]u8 = undefined;
+    if (name.len > buf.len) return null;
+    const upper = std.ascii.upperString(buf[0..name.len], name);
+    return std.meta.stringToEnum(Opcode, upper) catch null;
   }
 
   /// Return the string opcode for the current opcode enum value.
@@ -128,32 +125,32 @@ pub const Opcode = enum(u8) {
       .CLASSF => "classf",
       .CMPF => "cmpf",
       .CMPFE => "cmpfe",
-      .ADD_I => "addi",
-      .ADD_R => "add",
-      .ADDS_I => "addsi",
-      .ADDS_R => "adds",
-      .SUB_I => "subi",
-      .SUB_R => "sub",
-      .SUBS_I => "subsi",
-      .SUBS_R => "subs",
+      .ADDI => "addi",
+      .ADD => "add",
+      .ADDSI => "addsi",
+      .ADDS => "adds",
+      .SUBI => "subi",
+      .SUB => "sub",
+      .SUBSI => "subsi",
+      .SUBS => "subs",
       .MUL => "mul",
       .SMUL => "smul",
       .DIV => "div",
       .SDIV => "sdiv",
-      .OR_I => "ori",
-      .OR_R => "or",
-      .AND_I => "andi",
-      .AND_R => "and",
-      .XOR_I => "xori",
-      .XOR_R => "xor",
-      .NOT_I => "noti",
-      .NOT_R => "not",
-      .LSL_I => "lsli",
-      .LSL_R => "lsl",
-      .LSR_I => "lsri",
-      .LSR_R => "lsr",
-      .ASR_I => "asri",
-      .ASR_R => "asr",
+      .ORI => "ori",
+      .OR => "or",
+      .ANDI => "andi",
+      .AND => "and",
+      .XORI => "xori",
+      .XOR => "xor",
+      .NOTI => "noti",
+      .NOT => "not",
+      .LSLI => "lsli",
+      .LSL => "lsl",
+      .LSRI => "lsri",
+      .LSR => "lsr",
+      .ASRI => "asri",
+      .ASR => "asr",
       .MVI => "mvi",
       .SXB => "sxb",
       .SXH => "sxh",
@@ -194,7 +191,10 @@ pub const FusedfSubOp = enum(u8) {
   }
 
   pub fn fromString(name: []const u8) ?FusedfSubOp {
-    return std.meta.stringToEnum(FusedfSubOp, name) catch null;
+    var buf: [16]u8 = undefined;
+    if (name.len > buf.len) return null;
+    const upper = std.ascii.upperString(buf[0..name.len], name);
+    return std.meta.stringToEnum(FusedfSubOp, upper) catch null;
   }
 
   pub fn mnemonic(self: FusedfSubOp) []const u8 {
@@ -225,7 +225,10 @@ pub const SysSubOp = enum(u8) {
   }
 
   pub fn fromString(name: []const u8) ?SysSubOp {
-    return std.meta.stringToEnum(SysSubOp, name) catch null;
+    var buf: [16]u8 = undefined;
+    if (name.len > buf.len) return null;
+    const upper = std.ascii.upperString(buf[0..name.len], name);
+    return std.meta.stringToEnum(SysSubOp, upper) catch null;
   }
 
   pub fn mnemonic(self: SysSubOp) []const u8 {
@@ -247,4 +250,36 @@ pub const SysSubOp = enum(u8) {
 
 // ── Aliases ───────────────────────────────────────────────────────────────────
 
-pub const NOP = Opcode.add_i; // No-op (add r0, r0, #0)
+pub const NOP = Opcode.ADDI; // No-op (add r0, r0, #0)
+pub const CMPI = Opcode.SUBI; // Compare immediate (subs, result discarded)
+pub const CMP = Opcode.SUBS; // Compare register (subs, result discarded)
+pub const MV = Opcode.OR; // Move register (or r, r, #0)
+pub const MVNI = Opcode.SUBI; // Move immediate (sub r, r, #imm)
+pub const MVN = Opcode.SUB; // Move register negated (sub r, r, r)
+
+// ── Global opcode lookup ──────────────────────────────────────────────────────
+
+/// Result type for stringToOpcode — wraps Opcode, SysSubOp, or FusedfSubOp.
+pub const AnyOpcode = union(enum) {
+  opcode: Opcode,
+  sys: SysSubOp,
+  fusedf: FusedfSubOp,
+};
+
+/// Resolve a mnemonic string to an opcode across all namespaces.
+/// Tries Opcode (including aliases) → SysSubOp → FusedfSubOp.
+/// Returns null if the string does not match any known mnemonic.
+pub fn stringToOpcode(name: []const u8) ?AnyOpcode {
+  // Intercept any aliases first
+  if (std.ascii.eqlIgnoreCase(name, "nop")) return .{ .opcode = NOP };
+  if (std.ascii.eqlIgnoreCase(name, "cmpi")) return .{ .opcode = CMPI };
+  if (std.ascii.eqlIgnoreCase(name, "cmp")) return .{ .opcode = CMP };
+  if (std.ascii.eqlIgnoreCase(name, "mv")) return .{ .opcode = MV };
+  if (std.ascii.eqlIgnoreCase(name, "mvni")) return .{ .opcode = MVNI };
+  if (std.ascii.eqlIgnoreCase(name, "mvn")) return .{ .opcode = MVN };
+
+  if (Opcode.fromString(name)) |op| return .{ .opcode = op };
+  if (SysSubOp.fromString(name)) |op| return .{ .sys = op };
+  if (FusedfSubOp.fromString(name)) |op| return .{ .fusedf = op };
+  return null;
+}
