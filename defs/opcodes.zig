@@ -91,7 +91,13 @@ pub const Opcode = enum(u8) {
 
   /// Given the string opcode, return the respective opcode enum.
   pub fn fromString(name: []const u8) ?Opcode {
-    return std.meta.stringToEnum(Opcode, name) catch null;
+    return std.meta.stringToEnum(Opcode, name) catch {
+      // A possible null return is when the opcode string is a syscall or fusedf opcode.
+      // In that case, check the sub-opcodes.
+      return SysSubOp.fromString(name) orelse
+        FusedfSubOp.fromString(name) orelse
+        null;
+    };
   }
 
   /// Return the string opcode for the current opcode enum value.
