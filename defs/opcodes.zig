@@ -83,6 +83,13 @@ pub const Opcode = enum(u8) {
   STRF = 0xCB,
   SYS = 0xFF,
 
+  pub const NOP = @as(Opcode, .ADDI);
+  pub const CMPI = @as(Opcode, .SUBI);
+  pub const CMP = @as(Opcode, .SUBS);
+  pub const MV = @as(Opcode, .OR);
+  pub const MVNI = @as(Opcode, .SUBI);
+  pub const MVN = @as(Opcode, .SUB);
+
 
   /// Given the numeric opcode, return the respective opcode enum.
   pub fn fromByte(b: u8) ?Opcode {
@@ -250,12 +257,12 @@ pub const SysSubOp = enum(u8) {
 
 // ── Aliases ───────────────────────────────────────────────────────────────────
 
-pub const NOP = Opcode.ADDI; // No-op (add r0, r0, #0)
-pub const CMPI = Opcode.SUBI; // Compare immediate (subs, result discarded)
-pub const CMP = Opcode.SUBS; // Compare register (subs, result discarded)
-pub const MV = Opcode.OR; // Move register (or r, r, #0)
-pub const MVNI = Opcode.SUBI; // Move immediate (sub r, r, #imm)
-pub const MVN = Opcode.SUB; // Move register negated (sub r, r, r)
+// pub const NOP = Opcode.ADDI; // No-op (add r0, r0, #0)
+// pub const CMPI = Opcode.SUBI; // Compare immediate (subs, result discarded)
+// pub const CMP = Opcode.SUBS; // Compare register (subs, result discarded)
+// pub const MV = Opcode.OR; // Move register (or r, r, #0)
+// pub const MVNI = Opcode.SUBI; // Move immediate (sub r, r, #imm)
+// pub const MVN = Opcode.SUB; // Move register negated (sub r, r, r)
 
 // ── Global opcode lookup ──────────────────────────────────────────────────────
 
@@ -271,12 +278,12 @@ pub const AnyOpcode = union(enum) {
 /// Returns null if the string does not match any known mnemonic.
 pub fn stringToOpcode(name: []const u8) ?AnyOpcode {
   // Intercept any aliases first
-  if (std.ascii.eqlIgnoreCase(name, "nop")) return .{ .opcode = NOP };
-  if (std.ascii.eqlIgnoreCase(name, "cmpi")) return .{ .opcode = CMPI };
-  if (std.ascii.eqlIgnoreCase(name, "cmp")) return .{ .opcode = CMP };
-  if (std.ascii.eqlIgnoreCase(name, "mv")) return .{ .opcode = MV };
-  if (std.ascii.eqlIgnoreCase(name, "mvni")) return .{ .opcode = MVNI };
-  if (std.ascii.eqlIgnoreCase(name, "mvn")) return .{ .opcode = MVN };
+  if (std.ascii.eqlIgnoreCase(name, "nop")) return .{ .opcode = Opcode.NOP };
+  if (std.ascii.eqlIgnoreCase(name, "cmpi")) return .{ .opcode = Opcode.CMPI };
+  if (std.ascii.eqlIgnoreCase(name, "cmp")) return .{ .opcode = Opcode.CMP };
+  if (std.ascii.eqlIgnoreCase(name, "mv")) return .{ .opcode = Opcode.MV };
+  if (std.ascii.eqlIgnoreCase(name, "mvni")) return .{ .opcode = Opcode.MVNI };
+  if (std.ascii.eqlIgnoreCase(name, "mvn")) return .{ .opcode = Opcode.MVN };
 
   if (Opcode.fromString(name)) |op| return .{ .opcode = op };
   if (SysSubOp.fromString(name)) |op| return .{ .sys = op };
