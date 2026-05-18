@@ -17,7 +17,7 @@ ROOT = Path(__file__).parent
 SRC = ROOT / "opcodes.json"
 TARGETS = ROOT / "targets.json"
 TMPL_DIR = ROOT / "templates"
-OUT_DIR = ROOT / "generated"
+OUT_DIR = Path(__file__).parent.parent
 
 # ── Loading ───────────────────────────────────────────────────────────────────
 
@@ -228,7 +228,7 @@ def main():
     content = render(tmplPath.read_text(), meta, opcodes, aliases)
     outPath = OUT_DIR / cfg["output"]
     outPath.write_text(content)
-    print(f"  wrote {outPath.relative_to(ROOT)}  ({lang})")
+    print(f"  wrote {outPath}  ({lang})")
 
 if __name__ == "__main__":
   main()

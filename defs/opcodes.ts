@@ -1,5 +1,5 @@
 // AUTO-GENERATED — DO NOT EDIT
-// Source: opcodes.json  |  ISA: Aru32 v1.1.0  |  Generated: 2026-05-11
+// Source: opcodes.json  |  ISA: Aru32 v1.1.0  |  Generated: 2026-05-13
 // To update: edit opcodes.json then run scripts/generate.py
 
 export const ARU_WORD_SIZE = 32;
@@ -208,7 +208,7 @@ export const enum Opcode {
   STRB = 0xC8, // strb — 
 
   // M
-  STRBH = 0xC9, // strbh — 
+  STRH = 0xC9, // strh — 
 
   // fp_memory
   LDF = 0xCA, // ldf — FP load word
@@ -398,7 +398,7 @@ export const OPCODE_NAMES = new Map<number, string>([
 
   [0xC8, "strb"],
 
-  [0xC9, "strbh"],
+  [0xC9, "strh"],
 
   [0xCA, "ldf"],
 

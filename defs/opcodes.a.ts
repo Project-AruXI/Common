@@ -1,5 +1,5 @@
 // AUTO-GENERATED — DO NOT EDIT
-// Source: opcodes.json  |  ISA: Aru32 v1.1.0  |  Generated: 2026-05-11
+// Source: opcodes.json  |  ISA: Aru32 v1.1.0  |  Generated: 2026-05-13
 // To update: edit opcodes.json then run scripts/generate.py
 
 export const ARU_WORD_SIZE: u8 = 32;
@@ -206,7 +206,7 @@ export const OPCODE_STR: u8 = 0xC7; // str —
 export const OPCODE_STRB: u8 = 0xC8; // strb — 
 
 // M
-export const OPCODE_STRBH: u8 = 0xC9; // strbh — 
+export const OPCODE_STRH: u8 = 0xC9; // strh — 
 
 // fp_memory
 export const OPCODE_LDF: u8 = 0xCA; // ldf — FP load word

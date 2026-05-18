@@ -1,5 +1,5 @@
 // AUTO-GENERATED — DO NOT EDIT
-// Source: opcodes.json  |  ISA: Aru32 v1.1.0  |  Generated: 2026-05-11
+// Source: opcodes.json  |  ISA: Aru32 v1.1.0  |  Generated: 2026-05-13
 // To update: edit opcodes.json then run scripts/generate.py
 
 module opcodes
@@ -208,7 +208,7 @@ pub const opcode_str = u8(0xC7) // str —
 pub const opcode_strb = u8(0xC8) // strb — 
 
 // M
-pub const opcode_strbh = u8(0xC9) // strbh — 
+pub const opcode_strh = u8(0xC9) // strh — 
 
 // fp_memory
 pub const opcode_ldf = u8(0xCA) // ldf — FP load word
@@ -361,7 +361,7 @@ pub const opcode_names = {
 
 	u8(0xC8): 'strb',
 
-	u8(0xC9): 'strbh',
+	u8(0xC9): 'strh',
 
 	u8(0xCA): 'ldf',
 

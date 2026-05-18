@@ -1,5 +1,5 @@
 // AUTO-GENERATED — DO NOT EDIT
-// Source: opcodes.json  |  ISA: Aru32 v1.1.0  |  Generated: 2026-05-11
+// Source: opcodes.json  |  ISA: Aru32 v1.1.0  |  Generated: 2026-05-13
 // To update: edit opcodes.json then run scripts/generate.py
 
 #pragma once
@@ -215,7 +215,7 @@
 #define OPCODE_STRB ((uint8_t)0xC8U) /* strb —  */
 
 /* M */
-#define OPCODE_STRBH ((uint8_t)0xC9U) /* strbh —  */
+#define OPCODE_STRH ((uint8_t)0xC9U) /* strh —  */
 
 /* fp_memory */
 #define OPCODE_LDF ((uint8_t)0xCAU) /* ldf — FP load word */
