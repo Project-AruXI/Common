@@ -101,7 +101,7 @@ pub const Opcode = enum(u8) {
     var buf: [16]u8 = undefined;
     if (name.len > buf.len) return null;
     const upper = std.ascii.upperString(buf[0..name.len], name);
-    return std.meta.stringToEnum(Opcode, upper) catch null;
+    return std.meta.stringToEnum(Opcode, upper) orelse null;
   }
 
   /// Return the string opcode for the current opcode enum value.
@@ -201,7 +201,7 @@ pub const FusedfSubOp = enum(u8) {
     var buf: [16]u8 = undefined;
     if (name.len > buf.len) return null;
     const upper = std.ascii.upperString(buf[0..name.len], name);
-    return std.meta.stringToEnum(FusedfSubOp, upper) catch null;
+    return std.meta.stringToEnum(FusedfSubOp, upper) orelse null;
   }
 
   pub fn mnemonic(self: FusedfSubOp) []const u8 {
@@ -235,7 +235,7 @@ pub const SysSubOp = enum(u8) {
     var buf: [16]u8 = undefined;
     if (name.len > buf.len) return null;
     const upper = std.ascii.upperString(buf[0..name.len], name);
-    return std.meta.stringToEnum(SysSubOp, upper) catch null;
+    return std.meta.stringToEnum(SysSubOp, upper) orelse null;
   }
 
   pub fn mnemonic(self: SysSubOp) []const u8 {
@@ -256,34 +256,51 @@ pub const SysSubOp = enum(u8) {
 
 
 // ── Aliases ───────────────────────────────────────────────────────────────────
+// Soft aliases — keep alias identity during parsing while mapping to
+// a backing numeric opcode for encoding.
+pub const Alias = enum(u8) {
+  NOP,
+  CMPI,
+  CMP,
+  MV,
+  MVNI,
+  MVN,
+};
 
-// pub const NOP = Opcode.ADDI; // No-op (add r0, r0, #0)
-// pub const CMPI = Opcode.SUBI; // Compare immediate (subs, result discarded)
-// pub const CMP = Opcode.SUBS; // Compare register (subs, result discarded)
-// pub const MV = Opcode.OR; // Move register (or r, r, #0)
-// pub const MVNI = Opcode.SUBI; // Move immediate (sub r, r, #imm)
-// pub const MVN = Opcode.SUB; // Move register negated (sub r, r, r)
+pub fn aliasBacking(a: Alias) Opcode {
+  return switch (a) {
+    .NOP => Opcode.NOP,
+    .CMPI => Opcode.CMPI,
+    .CMP => Opcode.CMP,
+    .MV => Opcode.MV,
+    .MVNI => Opcode.MVNI,
+    .MVN => Opcode.MVN,
+  };
+}
 
 // ── Global opcode lookup ──────────────────────────────────────────────────────
 
-/// Result type for stringToOpcode — wraps Opcode, SysSubOp, or FusedfSubOp.
+/// Result type for stringToOpcode — wraps Opcode, SysSubOp, FusedfSubOp, or an Alias.
 pub const AnyOpcode = union(enum) {
   opcode: Opcode,
   sys: SysSubOp,
   fusedf: FusedfSubOp,
+  alias: Alias,
 };
 
 /// Resolve a mnemonic string to an opcode across all namespaces.
 /// Tries Opcode (including aliases) → SysSubOp → FusedfSubOp.
 /// Returns null if the string does not match any known mnemonic.
 pub fn stringToOpcode(name: []const u8) ?AnyOpcode {
-  // Intercept any aliases first
-  if (std.ascii.eqlIgnoreCase(name, "nop")) return .{ .opcode = Opcode.NOP };
-  if (std.ascii.eqlIgnoreCase(name, "cmpi")) return .{ .opcode = Opcode.CMPI };
-  if (std.ascii.eqlIgnoreCase(name, "cmp")) return .{ .opcode = Opcode.CMP };
-  if (std.ascii.eqlIgnoreCase(name, "mv")) return .{ .opcode = Opcode.MV };
-  if (std.ascii.eqlIgnoreCase(name, "mvni")) return .{ .opcode = Opcode.MVNI };
-  if (std.ascii.eqlIgnoreCase(name, "mvn")) return .{ .opcode = Opcode.MVN };
+  // Intercept known aliases first and return the alias identity so the
+  // parser can validate alias-specific syntax while still encoding with
+  // the backing opcode later.
+  if (std.ascii.eqlIgnoreCase(name, "nop")) return .{ .alias = Alias.NOP };
+  if (std.ascii.eqlIgnoreCase(name, "cmpi")) return .{ .alias = Alias.CMPI };
+  if (std.ascii.eqlIgnoreCase(name, "cmp")) return .{ .alias = Alias.CMP };
+  if (std.ascii.eqlIgnoreCase(name, "mv")) return .{ .alias = Alias.MV };
+  if (std.ascii.eqlIgnoreCase(name, "mvni")) return .{ .alias = Alias.MVNI };
+  if (std.ascii.eqlIgnoreCase(name, "mvn")) return .{ .alias = Alias.MVN };
 
   if (Opcode.fromString(name)) |op| return .{ .opcode = op };
   if (SysSubOp.fromString(name)) |op| return .{ .sys = op };
